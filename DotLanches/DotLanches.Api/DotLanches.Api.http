@@ -1,0 +1,6 @@
+@DotLanches.Api_HostAddress = http://localhost:5183
+
+GET {{DotLanches.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
