@@ -17,11 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-      <Folder Include="Dtos\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="DotLanches.Api.http" />
     </ItemGroup>
 

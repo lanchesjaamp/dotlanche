@@ -18,10 +18,4 @@
       <Compile Remove="Class1.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Data\" />
-      <Folder Include="ModelConfiguration\" />
-      <Folder Include="Repositories\" />
-    </ItemGroup>
-
 </Project>
