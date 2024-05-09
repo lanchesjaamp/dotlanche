@@ -7,15 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DotLanches.Application\DotLanches.Application.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Class1.cs" />
+      <ProjectReference Include="..\..\..\Core\DotLanches.Application\DotLanches.Application.csproj" />
     </ItemGroup>
 
 </Project>
