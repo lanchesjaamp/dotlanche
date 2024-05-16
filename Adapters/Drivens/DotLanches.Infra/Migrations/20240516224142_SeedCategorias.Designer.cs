@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotLanches.Infra.Migrations
 {
     [DbContext(typeof(DotLanchesDbContext))]
-    [Migration("20240515210142_SeedCategorias")]
+    [Migration("20240516224142_SeedCategorias")]
     partial class SeedCategorias
     {
         /// <inheritdoc />
@@ -34,11 +34,9 @@ namespace DotLanches.Infra.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("NAME");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("CATEGORIA_ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Categorias");
                 });
@@ -56,20 +54,16 @@ namespace DotLanches.Infra.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("DESCRIPTION");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("NAME");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
-                        .HasColumnName("PRICE");
+                        .HasColumnType("numeric");
 
-                    b.HasKey("Id")
-                        .HasName("PRODUCT_ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 

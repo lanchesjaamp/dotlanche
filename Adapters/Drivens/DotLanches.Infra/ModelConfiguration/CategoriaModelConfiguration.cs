@@ -9,7 +9,7 @@ namespace DotLanches.Infra.ModelConfiguration
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Name).HasColumnName("NAME").IsRequired();
+            builder.Property(x => x.Name).IsRequired();
         }
     }
 }

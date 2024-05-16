@@ -31,11 +31,9 @@ namespace DotLanches.Infra.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("NAME");
+                        .HasColumnType("text");
 
-                    b.HasKey("Id")
-                        .HasName("CATEGORIA_ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Categorias");
                 });
@@ -53,20 +51,16 @@ namespace DotLanches.Infra.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("DESCRIPTION");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("NAME");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
-                        .HasColumnName("PRICE");
+                        .HasColumnType("numeric");
 
-                    b.HasKey("Id")
-                        .HasName("PRODUCT_ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 

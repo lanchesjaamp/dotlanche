@@ -17,11 +17,11 @@ namespace DotLanches.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NAME = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("CATEGORIA_ID", x => x.Id);
+                    table.PrimaryKey("PK_Categorias", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,14 +30,14 @@ namespace DotLanches.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NAME = table.Column<string>(type: "text", nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "text", nullable: false),
-                    PRICE = table.Column<decimal>(type: "numeric", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
                     CategoriaId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PRODUCT_ID", x => x.Id);
+                    table.PrimaryKey("PK_Produtos", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Produtos_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
