@@ -24,10 +24,10 @@ namespace DotLanches.Api.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] ProdutoDto produtoDto)
+        [HttpPut("{idProduto}")]
+        public async Task<IActionResult> Update([FromRoute] int idProduto, [FromBody] ProdutoDto produtoDto)
         {
-            var produto = await _produtoService.Edit(produtoDto.ToDomainModel());
+            var produto = await _produtoService.Edit(produtoDto.ToDomainModel(idProduto));
 
             return Ok(produto);
         }

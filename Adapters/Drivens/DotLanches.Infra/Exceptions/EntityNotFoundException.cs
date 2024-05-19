@@ -1,9 +1,6 @@
 ﻿namespace DotLanches.Infra.Exceptions
 {
-    internal class EntityNotFoundException : Exception
+    public class EntityNotFoundException(string? message = null) : Exception(message ?? "Entity not found!")
     {
-        public EntityNotFoundException() : base("entity not found!")
-        {
-        }
     }
 }

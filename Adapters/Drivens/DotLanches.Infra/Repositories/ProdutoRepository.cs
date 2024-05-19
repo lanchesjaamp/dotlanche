@@ -17,10 +17,10 @@ namespace DotLanches.Infra.Repositories
 
         public async Task Add(Produto produto)
         {
-            var categoria = await _dbContext.Categorias.FirstOrDefaultAsync(c => c.Id == produto.Categoria.Id) ??
-                throw new EntityNotFoundException();
-
+            var categoria = _dbContext.Categorias.Find(produto.Categoria.Id) ??
+                throw new EntityNotFoundException("Categoria not found!");
             produto.Categoria = categoria;
+
             _dbContext.Produtos.Add(produto);
 
             await _dbContext.SaveChangesAsync();
@@ -28,19 +28,25 @@ namespace DotLanches.Infra.Repositories
 
         public async Task<Produto> Edit(Produto produto)
         {
-            var entity = _dbContext.Produtos.Find(produto.Id) ??
+            var produtoInDb = _dbContext.Produtos.Find(produto.Id) ?? 
                 throw new EntityNotFoundException();
 
-            _dbContext.Entry(entity).CurrentValues.SetValues(produto);
+            var categoriaInDb = _dbContext.Categorias.Find(produto.Categoria.Id) ?? 
+                throw new EntityNotFoundException("Categoria not found!");
+
+            produtoInDb.Name = produto.Name;
+            produtoInDb.Description = produto.Description;
+            produtoInDb.Price = produto.Price;
+            produtoInDb.Categoria = categoriaInDb;
 
             await _dbContext.SaveChangesAsync();
 
-            return produto;
+            return produtoInDb;
         }
 
         public async Task<Produto> Delete(int idProduto)
         {
-            var produto = await _dbContext.Produtos.FirstOrDefaultAsync(x => x.Id == idProduto) ??
+            var produto = _dbContext.Produtos.Find(idProduto) ??
                 throw new EntityNotFoundException();
 
             _dbContext.Produtos.Remove(produto);
