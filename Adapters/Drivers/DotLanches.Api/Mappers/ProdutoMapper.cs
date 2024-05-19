@@ -5,16 +5,13 @@ namespace DotLanches.Api.Mappers
 {
     public static class ProdutoMapper
     {
-        public static Produto ToDomainModel(this ProdutoDto produtoDto)
+        public static Produto ToDomainModel(this ProdutoDto produtoDto, int id = 0)
         {
-            var domainModel = new Produto()
-            {
-                Id = produtoDto.Id,
-                Categoria = new Categoria() { Id = produtoDto.CategoriaId },
-                Description = produtoDto.Description,
-                Name = produtoDto.Nome,
-                Price = produtoDto.Price,
-            };
+            var domainModel = new Produto(id,
+                                          produtoDto.Name,
+                                          produtoDto.Description,
+                                          produtoDto.Price,
+                                          new Categoria() { Id = (int)produtoDto.CategoriaId });
 
             return domainModel;
         }
