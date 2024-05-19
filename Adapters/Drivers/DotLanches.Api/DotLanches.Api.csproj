@@ -20,4 +20,9 @@
       <ProjectReference Include="..\..\Drivens\DotLanches.Infra\DotLanches.Infra.csproj" />
     </ItemGroup>
 
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+
 </Project>
