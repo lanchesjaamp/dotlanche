@@ -2,7 +2,8 @@ using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 
 namespace DotLanches.Application.Services {
-    public class ClienteService : IClienteService {
+    public class ClienteService : IClienteService 
+    {
         private readonly IClienteRepository _repository;
 
         public ClienteService(IClienteRepository repository) {
