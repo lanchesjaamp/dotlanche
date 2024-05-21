@@ -17,6 +17,7 @@ namespace DotLanches.Infra.Extensions
             services.MigrateDatabase();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
 
             return services;
         }
