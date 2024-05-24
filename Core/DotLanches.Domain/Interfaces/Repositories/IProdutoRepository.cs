@@ -11,5 +11,6 @@ namespace DotLanches.Domain.Interfaces.Repositories
         public Task<Produto> Delete(int idProduto);
 
         public Task<IEnumerable<Produto>> GetByCategoria(int idCategoria);
+        public Task<Produto> GetById(int idProduto);
     }
 }
