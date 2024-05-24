@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotLanches.Infra.Migrations
 {
     [DbContext(typeof(DotLanchesDbContext))]
-    [Migration("20240521013020_AddPedidoAndCombo")]
-    partial class AddPedidoAndCombo
+    [Migration("20240524212936_SeedStatus")]
+    partial class SeedStatus
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,32 +78,17 @@ namespace DotLanches.Infra.Migrations
                     b.Property<int?>("AcompanhamentoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("AcompanhamentoName")
-                        .HasColumnType("text");
-
                     b.Property<int?>("BebidaId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("BebidaName")
-                        .HasColumnType("text");
 
                     b.Property<int?>("LancheId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("LancheName")
-                        .HasColumnType("text");
-
                     b.Property<int>("PedidoId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
                     b.Property<int?>("SobremesaId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("SobremesaName")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -128,21 +113,20 @@ namespace DotLanches.Infra.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClienteCPF")
-                        .HasColumnType("text")
-                        .HasColumnName("ClienteCPF");
+                    b.Property<string>("ClienteCpf")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteCPF");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Pedidos");
                 });
@@ -176,24 +160,37 @@ namespace DotLanches.Infra.Migrations
                     b.ToTable("Produtos");
                 });
 
+            modelBuilder.Entity("DotLanches.Domain.Entities.Status", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
+                });
+
             modelBuilder.Entity("DotLanches.Domain.Entities.Combo", b =>
                 {
                     b.HasOne("DotLanches.Domain.Entities.Produto", "Acompanhamento")
                         .WithMany()
-                        .HasForeignKey("AcompanhamentoId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AcompanhamentoId");
 
                     b.HasOne("DotLanches.Domain.Entities.Produto", "Bebida")
                         .WithMany()
-                        .HasForeignKey("BebidaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("BebidaId");
 
                     b.HasOne("DotLanches.Domain.Entities.Produto", "Lanche")
                         .WithMany()
-                        .HasForeignKey("LancheId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("LancheId");
 
-                    b.HasOne("DotLanches.Domain.Entities.Pedido", "Pedido")
+                    b.HasOne("DotLanches.Domain.Entities.Pedido", null)
                         .WithMany("Combos")
                         .HasForeignKey("PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -201,8 +198,7 @@ namespace DotLanches.Infra.Migrations
 
                     b.HasOne("DotLanches.Domain.Entities.Produto", "Sobremesa")
                         .WithMany()
-                        .HasForeignKey("SobremesaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SobremesaId");
 
                     b.Navigation("Acompanhamento");
 
@@ -210,19 +206,16 @@ namespace DotLanches.Infra.Migrations
 
                     b.Navigation("Lanche");
 
-                    b.Navigation("Pedido");
-
                     b.Navigation("Sobremesa");
                 });
 
             modelBuilder.Entity("DotLanches.Domain.Entities.Pedido", b =>
                 {
-                    b.HasOne("DotLanches.Domain.Entities.Cliente", "Cliente")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("ClienteCPF")
-                        .HasPrincipalKey("Cpf");
+                    b.HasOne("DotLanches.Domain.Entities.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
 
-                    b.Navigation("Cliente");
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("DotLanches.Domain.Entities.Produto", b =>
@@ -234,11 +227,6 @@ namespace DotLanches.Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Categoria");
-                });
-
-            modelBuilder.Entity("DotLanches.Domain.Entities.Cliente", b =>
-                {
-                    b.Navigation("Pedidos");
                 });
 
             modelBuilder.Entity("DotLanches.Domain.Entities.Pedido", b =>
