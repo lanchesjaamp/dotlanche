@@ -13,6 +13,11 @@ public class Produto
 
     private Produto() { }
 
+    public Produto(int id)
+    {
+        Id = id;
+    }
+
     public Produto(int id,
                    string name,
                    string description,
