@@ -11,5 +11,6 @@ namespace DotLanches.Application.Services
         Task<Produto> Delete(int idProduto);
 
         Task<IEnumerable<Produto>> GetByCategoria(int idCategoria);
+        Task<Produto> GetById(int idProduto);
     }
 }

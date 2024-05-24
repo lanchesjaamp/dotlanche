@@ -78,5 +78,18 @@ namespace DotLanches.Api.Controllers
             var produtoList = await _produtoService.GetByCategoria(idCategoria);
             return Ok(produtoList);
         }
+
+        /// <summary>
+        /// Busca produtos pertencentes pelo Id
+        /// </summary>
+        /// <param name="idProduto">Id do produto a ser buscado</param>
+        /// <returns>Lista de produtos pelo Id</returns>
+        [HttpGet("{idProduto}")]
+        [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetById([Required][FromRoute] int idProduto)
+        {
+            var produtoList = await _produtoService.GetById(idProduto);
+            return Ok(produtoList);
+        }
     }
 }
