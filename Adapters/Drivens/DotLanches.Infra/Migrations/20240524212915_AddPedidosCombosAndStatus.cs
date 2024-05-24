@@ -7,15 +7,23 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotLanches.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPedidoAndCombo : Migration
+    public partial class AddPedidosCombosAndStatus : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddUniqueConstraint(
-                name: "AK_Clientes_Cpf",
-                table: "Clientes",
-                column: "Cpf");
+            migrationBuilder.CreateTable(
+                name: "Status",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Pedidos",
@@ -24,17 +32,17 @@ namespace DotLanches.Infra.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
-                    ClienteCPF = table.Column<string>(type: "text", nullable: true),
-                    TotalPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                    ClienteCpf = table.Column<string>(type: "text", nullable: true),
+                    StatusId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pedidos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pedidos_Clientes_ClienteCPF",
-                        column: x => x.ClienteCPF,
-                        principalTable: "Clientes",
-                        principalColumn: "Cpf");
+                        name: "FK_Pedidos_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Status",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -45,14 +53,9 @@ namespace DotLanches.Infra.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PedidoId = table.Column<int>(type: "integer", nullable: false),
                     LancheId = table.Column<int>(type: "integer", nullable: true),
-                    LancheName = table.Column<string>(type: "text", nullable: true),
                     AcompanhamentoId = table.Column<int>(type: "integer", nullable: true),
-                    AcompanhamentoName = table.Column<string>(type: "text", nullable: true),
                     BebidaId = table.Column<int>(type: "integer", nullable: true),
-                    BebidaName = table.Column<string>(type: "text", nullable: true),
-                    SobremesaId = table.Column<int>(type: "integer", nullable: true),
-                    SobremesaName = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false)
+                    SobremesaId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,26 +70,22 @@ namespace DotLanches.Infra.Migrations
                         name: "FK_Combos_Produtos_AcompanhamentoId",
                         column: x => x.AcompanhamentoId,
                         principalTable: "Produtos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Combos_Produtos_BebidaId",
                         column: x => x.BebidaId,
                         principalTable: "Produtos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Combos_Produtos_LancheId",
                         column: x => x.LancheId,
                         principalTable: "Produtos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Combos_Produtos_SobremesaId",
                         column: x => x.SobremesaId,
                         principalTable: "Produtos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -115,9 +114,9 @@ namespace DotLanches.Infra.Migrations
                 column: "SobremesaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_ClienteCPF",
+                name: "IX_Pedidos_StatusId",
                 table: "Pedidos",
-                column: "ClienteCPF");
+                column: "StatusId");
         }
 
         /// <inheritdoc />
@@ -129,9 +128,8 @@ namespace DotLanches.Infra.Migrations
             migrationBuilder.DropTable(
                 name: "Pedidos");
 
-            migrationBuilder.DropUniqueConstraint(
-                name: "AK_Clientes_Cpf",
-                table: "Clientes");
+            migrationBuilder.DropTable(
+                name: "Status");
         }
     }
 }

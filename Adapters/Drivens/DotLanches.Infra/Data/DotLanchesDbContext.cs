@@ -11,6 +11,7 @@ namespace DotLanches.Infra.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Combo> Combos { get; set; }
+        public DbSet<Status> Status { get; set; }
 
         public DotLanchesDbContext(DbContextOptions<DotLanchesDbContext> options) : base(options)
         {
@@ -23,6 +24,7 @@ namespace DotLanches.Infra.Data
             new ClienteModelConfiguration().Configure(modelBuilder.Entity<Cliente>());
             new PedidoModelConfiguration().Configure(modelBuilder.Entity<Pedido>());
             new ComboModelConfiguration().Configure(modelBuilder.Entity<Combo>());
+            new StatusModelConfiguration().Configure(modelBuilder.Entity<Status>());
         }
     }
 }
