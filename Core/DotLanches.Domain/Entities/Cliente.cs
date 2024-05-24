@@ -11,7 +11,6 @@ namespace DotLanches.Domain.Entities
         public string? Name { get; set; }
         public string? Cpf { get; set; }
         public string? Email { get; set; }
-        public IEnumerable<Pedido>? Pedidos { get; set; }
 
         private Cliente() {}
 
