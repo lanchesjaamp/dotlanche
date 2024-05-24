@@ -59,5 +59,10 @@ namespace DotLanches.Infra.Repositories
         {
             return await _dbContext.Produtos.Include(x => x.Categoria).Where(x => x.Categoria.Id == idCategoria).ToListAsync();
         }
+
+        public async Task<Produto> GetById(int idProduto)
+        {
+            return await _dbContext.Produtos.Include(p => p.Categoria).FirstOrDefaultAsync(p => p.Id == idProduto);
+        }
     }
 }
