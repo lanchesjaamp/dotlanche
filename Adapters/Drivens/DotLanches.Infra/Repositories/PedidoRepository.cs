@@ -1,12 +1,9 @@
-﻿using DotLanches.Domain.Entities;
+﻿#pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
+using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Infra.Data;
+using DotLanches.Infra.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DotLanches.Infra.Repositories
 {
@@ -21,7 +18,22 @@ namespace DotLanches.Infra.Repositories
 
         public async Task Add(Pedido pedido)
         {
+            if (pedido.Status is not null)
+            {
+                var status = await _dbContext.Status.FindAsync(pedido.Status.Id) ??
+                    throw new EntityNotFoundException("Status not found!");
+                pedido.Status = status;
+            }
+
+            if (pedido.ClienteCpf is not null)
+            {
+                var clienteCpf = await _dbContext.Clientes.FirstOrDefaultAsync(c => c.Cpf == pedido.ClienteCpf) ??
+                    throw new EntityNotFoundException("Cliente not found!");
+                pedido.ClienteCpf = clienteCpf.Cpf;
+            }
+
             _dbContext.Pedidos.Add(pedido);
+
             await _dbContext.SaveChangesAsync();
         }
 
@@ -30,37 +42,31 @@ namespace DotLanches.Infra.Repositories
             var pedidos = await _dbContext.Pedidos
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Lanche)
+                        .ThenInclude(l => l.Categoria)
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Acompanhamento)
+                        .ThenInclude(a => a.Categoria)
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Bebida)
+                        .ThenInclude(b => b.Categoria)
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Sobremesa)
-                .Include(p => p.Cliente)
+                        .ThenInclude(s => s.Categoria)
+                .Include(p => p.Status)
+                .Where(p => p.Status.Id != 4)
                 .OrderBy(p => p.CreatedAt)
-                .Select(pedido => new Pedido
-                {
-                    Id = pedido.Id,
-                    CreatedAt = pedido.CreatedAt,
-                    ClienteCPF = pedido.Cliente.Cpf,
-                    TotalPrice = pedido.TotalPrice,
-                    Combos = pedido.Combos.Select(c => new Combo
-                    {
-                        Id = c.Id,
-                        PedidoId = c.PedidoId,
-                        LancheId = c.LancheId,
-                        LancheName = _dbContext.Produtos.Where(p => p.Id == c.LancheId).Select(p => p.Name).FirstOrDefault(),
-                        AcompanhamentoId = c.AcompanhamentoId,
-                        AcompanhamentoName = _dbContext.Produtos.Where(p => p.Id == c.AcompanhamentoId).Select(p => p.Name).FirstOrDefault(),
-                        BebidaId = c.BebidaId,
-                        BebidaName = _dbContext.Produtos.Where(p => p.Id == c.BebidaId).Select(p => p.Name).FirstOrDefault(),
-                        SobremesaId = c.SobremesaId,
-                        SobremesaName = _dbContext.Produtos.Where(p => p.Id == c.SobremesaId).Select(p => p.Name).FirstOrDefault(),
-                        Price = c.Price
-                    }).ToList()
-                }).ToListAsync();
+                .ToListAsync();
 
-                return pedidos;
+            foreach (var pedido in pedidos)
+            {
+                foreach (var combo in pedido.Combos)
+                {
+                    combo.CalculatePrice();
+                }
+                pedido.CalculateTotalPrice();
+            }
+
+            return pedidos;
         }
     }
 }
