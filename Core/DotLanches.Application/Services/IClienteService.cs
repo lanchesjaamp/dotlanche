@@ -11,5 +11,7 @@ namespace DotLanches.Application.Services
         Task<Cliente> Delete(int idCliente);
 
         Task<IEnumerable<Cliente>> GetAll();
+
+        Task<Cliente?> GetByCpf(string cpf);
     }
 }
