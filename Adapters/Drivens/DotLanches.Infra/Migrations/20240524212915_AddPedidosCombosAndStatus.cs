@@ -33,7 +33,7 @@ namespace DotLanches.Infra.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     ClienteCpf = table.Column<string>(type: "text", nullable: true),
-                    StatusId = table.Column<int>(type: "integer", nullable: true)
+                    StatusId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

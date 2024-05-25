@@ -1,18 +1,30 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
 using DotLanches.Domain.Exceptions;
 
 namespace DotLanches.Domain.Entities;
+
+public enum StatusPedido
+{
+    Confirmado = 1,
+    Recebido = 2,
+    EmPreparacao = 3,
+    Pronto = 4,
+    Finalizado = 5,
+    Cancelado = 6,
+}
 
 public class Pedido
 {
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public string? ClienteCpf { get; set; }
-    public Status? Status { get; set; }
+    public int StatusId { get; set; }
     public decimal TotalPrice { get; set; }
     public IEnumerable<Combo> Combos { get; set; }
 
-    private Pedido() { }
+    private Pedido()
+    { }
 
     public Pedido(int id,
                   DateTime createdAt,
@@ -23,6 +35,7 @@ public class Pedido
         CreatedAt = createdAt;
         ClienteCpf = clienteCpf;
         Combos = combos;
+        StatusId = (int)StatusPedido.Confirmado;
 
         ValidateEntity();
     }
@@ -30,7 +43,7 @@ public class Pedido
     private void ValidateEntity()
     {
         if (Combos is null)
-            throw new DomainValidationException(nameof(Combos));        
+            throw new DomainValidationException(nameof(Combos));
     }
 
     public void CalculateTotalPrice()

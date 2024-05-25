@@ -18,13 +18,6 @@ namespace DotLanches.Infra.Repositories
 
         public async Task Add(Pedido pedido)
         {
-            if (pedido.Status is not null)
-            {
-                var status = await _dbContext.Status.FindAsync(pedido.Status.Id) ??
-                    throw new EntityNotFoundException("Status not found!");
-                pedido.Status = status;
-            }
-
             if (pedido.ClienteCpf is not null)
             {
                 var clienteCpf = await _dbContext.Clientes.FirstOrDefaultAsync(c => c.Cpf == pedido.ClienteCpf) ??
@@ -52,8 +45,7 @@ namespace DotLanches.Infra.Repositories
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Sobremesa)
                         .ThenInclude(s => s.Categoria)
-                .Include(p => p.Status)
-                .Where(p => p.Status.Id != 4)
+                .Where(p => p.StatusId !=  (int)StatusPedido.Finalizado)
                 .OrderBy(p => p.CreatedAt)
                 .ToListAsync();
 

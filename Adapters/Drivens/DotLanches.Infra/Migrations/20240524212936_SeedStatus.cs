@@ -10,10 +10,12 @@ namespace DotLanches.Infra.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.InsertData("Status", "Name", "Confirmado");
             migrationBuilder.InsertData("Status", "Name", "Recebido");
             migrationBuilder.InsertData("Status", "Name", "EmPreparacao");
             migrationBuilder.InsertData("Status", "Name", "Pronto");
             migrationBuilder.InsertData("Status", "Name", "Finalizado");
+            migrationBuilder.InsertData("Status", "Name", "Cancelado");
         }
 
         /// <inheritdoc />
