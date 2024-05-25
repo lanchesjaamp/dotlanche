@@ -12,9 +12,9 @@ public class Pagamento
 
     private Pagamento() {}
 
-    public Pagamento(int idPedido)
+    public Pagamento(int? idPedido)
     {
-        this.IdPedido = idPedido ?? throw new ArgumentNullException(nameof(idPedido));
+        IdPedido = idPedido ?? throw new ArgumentNullException(nameof(idPedido));
     }
 
     public void ConfirmPayment()

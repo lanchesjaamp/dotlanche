@@ -4,8 +4,8 @@ namespace DotLanches.Domain.Interfaces.Repositories
 {
   public interface IPagamentoRepository
   {
-    Task<Pedido> Add(Pedido pedido);
+    Task Add(Pagamento pagamento);
 
-    Task<Pedido> Confirm(Pedido pedido);
+    Task<Pagamento> Confirm(int idPagamento);
   }
 }

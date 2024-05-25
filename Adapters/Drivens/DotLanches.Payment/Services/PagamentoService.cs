@@ -1,8 +1,10 @@
-using Core.DotLanches.Application;
+using DotLanches.Application.Services;
+using DotLanches.Domain.Entities;
+using DotLanches.Domain.Interfaces.Repositories;
 
 namespace DotLanches.Payment.Services
 {
-    internal class PagamentoService : IPagamentoService
+    public class PagamentoService : IPagamentoService
     {
         private readonly IPagamentoRepository _repository;
 
@@ -16,7 +18,8 @@ namespace DotLanches.Payment.Services
             var pagamento = new Pagamento(pedido.Id);
             await _repository.Add(pagamento);
             //Fake Checkout for current version
-            await _repository.Confirm(pagamento)
+            pagamento = await _repository.Confirm(pagamento.Id);
+            return pagamento;
         }
     }
 }

@@ -3,6 +3,7 @@ using DotLanches.Application.Services;
 using DotLanches.Infra.Extensions;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using DotLanches.Payment.Services;
 
 namespace DotLanches.Api.Extensions
 {
@@ -16,6 +17,7 @@ namespace DotLanches.Api.Extensions
             services.ConfigureDatabase(configuration);
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IPagamentoService, PagamentoService>();
 
             services.AddExceptionHandler<ExceptionFilter>();
             services.AddProblemDetails();

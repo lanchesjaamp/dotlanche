@@ -9,7 +9,7 @@ namespace DotLanches.Api.Controllers
     [Route("[controller]")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public class ClienteController : ControllerBase
+    public class PagamentoController : ControllerBase
     {
         private readonly IPagamentoService _pagamentoService;
 

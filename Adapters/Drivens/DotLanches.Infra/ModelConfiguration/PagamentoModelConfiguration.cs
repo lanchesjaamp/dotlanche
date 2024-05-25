@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DotLanches.Infra.ModelConfiguration
 {
-    internal class ClienteModelConfiguration : IEntityTypeConfiguration<Cliente>
+    internal class PagamentoModelConfiguration : IEntityTypeConfiguration<Pagamento>
     {
-        public void Configure(EntityTypeBuilder<Cliente> builder)
+        public void Configure(EntityTypeBuilder<Pagamento> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.IdPedido).IsRequired();
