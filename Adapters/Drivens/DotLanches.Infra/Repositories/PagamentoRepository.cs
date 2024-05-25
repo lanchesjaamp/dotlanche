@@ -27,8 +27,7 @@ namespace DotLanches.Infra.Repositories
             var entity = _dbContext.Pagamentos.Find(pagamentoId) ??
                 throw new EntityNotFoundException();
 
-            entity.IsAccepted = true;
-            entity.HorarioRegistro = DateTime.Now;
+            entity.ConfirmPayment();
 
             await _dbContext.SaveChangesAsync();
             return entity;
