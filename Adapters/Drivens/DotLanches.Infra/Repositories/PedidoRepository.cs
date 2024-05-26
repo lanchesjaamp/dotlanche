@@ -1,4 +1,5 @@
 ﻿#pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
+
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Infra.Data;
@@ -18,12 +19,7 @@ namespace DotLanches.Infra.Repositories
 
         public async Task Add(Pedido pedido)
         {
-            if (pedido.Status is not null)
-            {
-                var status = await _dbContext.Status.FindAsync(pedido.Status.Id) ??
-                    throw new EntityNotFoundException("Status not found!");
-                pedido.Status = status;
-            }
+            _dbContext.Entry(pedido.Status).State = EntityState.Unchanged;
 
             if (pedido.ClienteCpf is not null)
             {
@@ -39,7 +35,7 @@ namespace DotLanches.Infra.Repositories
 
         public async Task<IEnumerable<Pedido>> GetAll()
         {
-            var pedidos = await _dbContext.Pedidos
+            return await _dbContext.Pedidos
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Lanche)
                         .ThenInclude(l => l.Categoria)
@@ -56,17 +52,6 @@ namespace DotLanches.Infra.Repositories
                 .Where(p => p.Status.Id != Status.Finalizado().Id)
                 .OrderBy(p => p.CreatedAt)
                 .ToListAsync();
-
-            foreach (var pedido in pedidos)
-            {
-                foreach (var combo in pedido.Combos)
-                {
-                    combo.CalculatePrice();
-                }
-                pedido.CalculateTotalPrice();
-            }
-
-            return pedidos;
         }
     }
 }

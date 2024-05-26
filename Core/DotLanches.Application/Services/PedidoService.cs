@@ -35,7 +35,18 @@ namespace DotLanches.Application.Services
 
         public async Task<IEnumerable<Pedido>> GetAll()
         {
-            return await _pedidoRepository.GetAll();
+            var pedidos = await _pedidoRepository.GetAll();
+
+            foreach (var pedido in pedidos)
+            {
+                foreach (var combo in pedido.Combos)
+                {
+                    combo.CalculatePrice();
+                }
+                pedido.CalculateTotalPrice();
+            }
+
+            return pedidos;
         } 
     }
 }
