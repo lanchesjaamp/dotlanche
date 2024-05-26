@@ -1,7 +1,7 @@
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Domain.Exceptions;
-using DotLanches.Domain.Extensions;
+using DotLanches.Domain.ValueObjects;
 
 namespace DotLanches.Application.Services 
 {
@@ -15,12 +15,12 @@ namespace DotLanches.Application.Services
 
         public async Task Add(Cliente cliente)
         {
-            var clienteExists = await GetByCpf(cliente.Cpf!);
+            var clienteExists = await _repository.GetByCpf(cliente.Cpf.Number!);
 
             if (clienteExists is null)
                 await _repository.Add(cliente);
             else
-                throw new ClienteAlreadyExistsException(cliente.Cpf!);
+                throw new ClienteAlreadyExistsException(cliente.Cpf.Number!);
         }
 
         public async Task<Cliente> Edit(Cliente cliente) => await _repository.Edit(cliente);
@@ -31,8 +31,9 @@ namespace DotLanches.Application.Services
 
         public async Task<Cliente?> GetByCpf(string cpf)
         {
-            var formattedCpf = Validator.ValidateAndFormatCpf(cpf);
-            var cliente = await _repository.GetByCpf(formattedCpf);
+            var cpfNumber = new Cpf(cpf);
+
+            var cliente = await _repository.GetByCpf(cpfNumber.Number);
 
             if (cliente is null)
                 throw new ClienteNotFoundException(cpf);

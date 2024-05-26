@@ -1,10 +1,18 @@
-﻿using System.Text.RegularExpressions;
-using DotLanches.Domain.Exceptions;
+﻿using DotLanches.Domain.Exceptions;
+using System.Text.RegularExpressions;
 
-namespace DotLanches.Domain.Extensions
+namespace DotLanches.Domain.ValueObjects
 {
-    public static class Validator
+    public class Cpf
     {
+        public string Number { get; private set; }
+
+        public Cpf(string number)
+        {
+            var cpf = ValidateAndFormatCpf(number);
+            Number = number;
+        }
+
         public static string ValidateAndFormatCpf(string cpf)
         {
             if (string.IsNullOrWhiteSpace(cpf))
