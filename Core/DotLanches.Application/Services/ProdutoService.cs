@@ -19,5 +19,7 @@ namespace DotLanches.Application.Services
         public async Task<Produto> Delete(int idProduto) => await _repository.Delete(idProduto);
 
         public async Task<IEnumerable<Produto>> GetByCategoria(int idCategoria) => await _repository.GetByCategoria(idCategoria);
+
+        public async Task<Produto> GetById(int idProduto) => await _repository.GetById(idProduto);
     }
 }
