@@ -53,7 +53,7 @@ namespace DotLanches.Infra.Repositories
                     .ThenInclude(c => c.Sobremesa)
                         .ThenInclude(s => s.Categoria)
                 .Include(p => p.Status)
-                .Where(p => p.Status.Id != 4)
+                .Where(p => p.Status.Id != Status.Finalizado().Id)
                 .OrderBy(p => p.CreatedAt)
                 .ToListAsync();
 

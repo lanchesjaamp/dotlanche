@@ -8,7 +8,7 @@ public class Pedido
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public string? ClienteCpf { get; set; }
-    public Status? Status { get; set; }
+    public Status Status { get; set; }
     public decimal TotalPrice { get; set; }
     public IEnumerable<Combo> Combos { get; set; }
 
@@ -23,6 +23,7 @@ public class Pedido
         CreatedAt = createdAt;
         ClienteCpf = clienteCpf;
         Combos = combos;
+        Status = Status.Confirmado();
 
         ValidateEntity();
     }
