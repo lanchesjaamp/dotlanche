@@ -1,5 +1,6 @@
 ﻿using DotLanches.Api.Filters;
 using DotLanches.Application.Services;
+using DotLanches.Domain.Interfaces.Services;
 using DotLanches.Infra.Extensions;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -17,6 +18,7 @@ namespace DotLanches.Api.Extensions
             services.ConfigureDatabase(configuration);
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IPedidoService, PedidoService>();
             services.AddScoped<IPagamentoService, PagamentoService>();
 
             services.AddExceptionHandler<ExceptionFilter>();

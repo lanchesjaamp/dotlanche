@@ -11,7 +11,7 @@ namespace DotLanches.Domain.Entities
         public string? Name { get; set; }
         public string? Cpf { get; set; }
         public string? Email { get; set; }
-        
+
         private Cliente() {}
 
         public Cliente(int id, string name, string cpf, string email)
@@ -20,7 +20,7 @@ namespace DotLanches.Domain.Entities
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Cpf = cpf ?? throw new ArgumentNullException(nameof(cpf));
             Email = email ?? throw new ArgumentNullException(nameof(email));
-            
+
             ValidateEntity();
         }
         
