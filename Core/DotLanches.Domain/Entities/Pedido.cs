@@ -30,7 +30,7 @@ public class Pedido
 
     private void ValidateEntity()
     {
-        if (Combos is null)
+        if (Combos is null || !Combos.Any())
             throw new DomainValidationException(nameof(Combos));        
     }
 
