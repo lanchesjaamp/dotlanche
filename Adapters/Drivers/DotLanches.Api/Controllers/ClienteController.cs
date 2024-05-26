@@ -84,6 +84,7 @@ namespace DotLanches.Api.Controllers
         /// <returns>Cliente</returns>
         [HttpGet("{cpf}")]
         [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByCpf(string cpf)
         {

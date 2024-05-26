@@ -1,10 +1,10 @@
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
-using System.Text.RegularExpressions;
 using DotLanches.Domain.Exceptions;
 using DotLanches.Domain.Extensions;
 
-namespace DotLanches.Application.Services {
+namespace DotLanches.Application.Services 
+{
     public class ClienteService : IClienteService 
     {
         private readonly IClienteRepository _repository;
@@ -32,8 +32,12 @@ namespace DotLanches.Application.Services {
         public async Task<Cliente?> GetByCpf(string cpf)
         {
             var formattedCpf = Validator.ValidateAndFormatCpf(cpf);
-            
-            return await _repository.GetByCpf(formattedCpf);
+            var cliente = await _repository.GetByCpf(formattedCpf);
+
+            if (cliente is null)
+                throw new ClienteNotFoundException(cpf);
+
+            return cliente;
         }
     }
 }
