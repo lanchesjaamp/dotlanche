@@ -10,7 +10,7 @@ namespace DotLanches.Domain.ValueObjects
         public Cpf(string number)
         {
             var cpf = ValidateAndFormatCpf(number);
-            Number = number;
+            Number = cpf;
         }
 
         public static string ValidateAndFormatCpf(string cpf)
