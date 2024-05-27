@@ -11,6 +11,6 @@ namespace DotLanches.Domain.Interfaces.Services
     {
         Task Add(Pedido pedido);
         Task<IEnumerable<Pedido>> GetAll();
-        Task QueueKeyAssignment(Pedido pedido);
+        Task<int> QueueKeyAssignment(Pedido pedido);
     }
 }

@@ -10,7 +10,7 @@ namespace DotLanches.Domain.Interfaces.Repositories
     public interface IPedidoRepository
     {
         Task Add(Pedido pedido);
+        Task<int> AssignKey(Pedido pedido);
         Task<IEnumerable<Pedido>> GetAll();
-        Task AssignKey(Pedido pedido);
     }
 }
