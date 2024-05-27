@@ -20,6 +20,12 @@ public class Pagamento
     public void ConfirmPayment()
     {
         this.IsAccepted = true;
-        this.RegisteredAt = DateTime.Now;
+        this.RegisteredAt = DateTime.UtcNow;
+    }
+
+    public void RefusePayment()
+    {
+        this.IsAccepted = false;
+        this.RegisteredAt = DateTime.UtcNow;
     }
 }

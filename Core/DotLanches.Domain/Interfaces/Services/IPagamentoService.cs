@@ -4,6 +4,6 @@ namespace DotLanches.Application.Services
 {
     public interface IPagamentoService
     {
-        Task<Pagamento> Checkout(Pedido pedido);
+        Task<Pagamento> ProcessPagamento(int idPedido);
     }
 }
