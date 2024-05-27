@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotLanches.Infra.Data
 {
-    internal class DotLanchesDbContext : DbContext
+    public class DotLanchesDbContext : DbContext
     {
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }

@@ -2,7 +2,6 @@ using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Infra.Data;
 using DotLanches.Infra.Exceptions;
-using Microsoft.EntityFrameworkCore;
 
 namespace DotLanches.Infra.Repositories
 {
@@ -22,15 +21,11 @@ namespace DotLanches.Infra.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Pagamento> Confirm(int pagamentoId)
+        public async Task<Pagamento> Update(Pagamento pagamento)
         {
-            var entity = _dbContext.Pagamentos.Find(pagamentoId) ??
-                throw new EntityNotFoundException();
-
-            entity.ConfirmPayment();
-
+            _dbContext.Pagamentos.Update(pagamento);
             await _dbContext.SaveChangesAsync();
-            return entity;
+            return pagamento;
         }
     }
 }
