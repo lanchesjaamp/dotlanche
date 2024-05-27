@@ -8,7 +8,7 @@ public class Pagamento
 
     public bool? IsAccepted { get; set; }
     
-    public DateTime? HorarioRegistro { get; set; }
+    public DateTime? RegisteredAt { get; set; }
 
     private Pagamento() {}
 
@@ -20,6 +20,6 @@ public class Pagamento
     public void ConfirmPayment()
     {
         this.IsAccepted = true;
-        this.HorarioRegistro = DateTime.Now;
+        this.RegisteredAt = DateTime.Now;
     }
 }

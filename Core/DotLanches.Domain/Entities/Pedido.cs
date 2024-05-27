@@ -12,6 +12,7 @@ public class Pedido
     public decimal TotalPrice { get; set; }
     public IEnumerable<Combo> Combos { get; set; }
     public int QueueKey { get; set; }
+    public DateTime AddedToQueueAt { get; set; }
 
     private Pedido() { }
 
