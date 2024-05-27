@@ -60,15 +60,6 @@ namespace DotLanches.Infra.Repositories
                 .OrderBy(p => p.CreatedAt)
                 .ToListAsync();
 
-            foreach (var pedido in pedidos)
-            {
-                foreach (var combo in pedido.Combos)
-                {
-                    combo.CalculatePrice();
-                }
-                pedido.CalculateTotalPrice();
-            }
-
             return pedidos;
         }
 
