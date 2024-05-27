@@ -9,7 +9,7 @@ namespace DotLanches.Api.Mappers
         {
             var domainModel = new Pedido(id,
                                          DateTime.UtcNow,
-                                         pedidoDto.ClienteCpf.Number,
+                                         pedidoDto.ClienteCpf?.Number,
                                          pedidoDto.Combos.Select(c => c.ToDomainModel()).ToList());
 
             return domainModel;
