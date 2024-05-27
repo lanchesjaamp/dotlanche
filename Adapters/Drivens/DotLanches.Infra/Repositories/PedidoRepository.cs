@@ -41,7 +41,6 @@ namespace DotLanches.Infra.Repositories
 
         public async Task<IEnumerable<Pedido>> GetAll()
         {
-            return await _dbContext.Pedidos
             var pedidos = await _dbContext.Pedidos
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Lanche)
@@ -73,10 +72,14 @@ namespace DotLanches.Infra.Repositories
             return pedidos;
         }
 
-        public Task AssignKey(Pedido pedido)
+        public async Task<int> AssignKey(Pedido pedido)
         {
+            var entity = _dbContext.Pedidos.Find(pedido.Id) ?? throw new EntityNotFoundException();
             var maxActiveOrderKey = await _dbContext.Pedidos.Where(p => p.Status.Id != 4).MaxAsync(p => (int?)p.QueueKey) ?? 0;
-            return maxActiveOrderKey + 1;
+            entity.QueueKey = maxActiveOrderKey + 1;
+            entity.AddedToQueueAt = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return entity.QueueKey;
         }
     }
 }
