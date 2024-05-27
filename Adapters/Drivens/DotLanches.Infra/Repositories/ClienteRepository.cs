@@ -49,6 +49,11 @@ namespace DotLanches.Infra.Repositories
             return await _dbContext.Clientes.ToListAsync();
         }
 
+        public async Task<Cliente?> GetByCpf(string cpf)
+        {
+            return await _dbContext.Clientes.FirstOrDefaultAsync(x => x.Cpf.Number == cpf);
+        }
+
         public async Task<Cliente> GetById(int idCliente)
         {
             return await _dbContext.Clientes.FirstOrDefaultAsync(x => x.Id == idCliente) ??

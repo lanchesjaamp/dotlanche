@@ -11,5 +11,7 @@ namespace DotLanches.Domain.Interfaces.Repositories
     public Task<Cliente> Delete(int idCliente);
 
     public Task<IEnumerable<Cliente>> GetAll();
-  }
+
+    public Task<Cliente?> GetByCpf(string cpf);
+    }
 }

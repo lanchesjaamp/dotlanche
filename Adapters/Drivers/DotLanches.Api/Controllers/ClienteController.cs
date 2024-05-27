@@ -76,5 +76,20 @@ namespace DotLanches.Api.Controllers
             var clienteList = await _clienteService.GetAll();
             return Ok(clienteList);
         }
+
+        /// <summary>
+        /// Busca de cliente por CPF
+        /// </summary>
+        /// <param name="cpf">cpf do cliente</param>
+        /// <returns>Cliente</returns>
+        [HttpGet("{cpf}")]
+        [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByCpf(string cpf)
+        {
+            var clienteList = await _clienteService.GetByCpf(cpf);
+            return Ok(clienteList);
+        }
     }
 }

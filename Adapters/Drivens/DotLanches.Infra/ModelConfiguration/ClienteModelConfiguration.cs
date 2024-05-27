@@ -10,7 +10,16 @@ namespace DotLanches.Infra.ModelConfiguration
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Cpf).IsRequired();
+
+            builder.OwnsOne(
+                x => x.Cpf,
+                cpf =>
+                {
+                    cpf.Property(c => c.Number)
+                        .HasColumnName("Cpf")
+                        .IsRequired();
+                });
+
             builder.Property(x => x.Email).IsRequired();
         }
     }
