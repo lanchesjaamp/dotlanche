@@ -27,6 +27,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotLanches.Domain", "Core\DotLanches.Domain\DotLanches.Domain.csproj", "{3102FF51-31B8-409E-A387-9942BE4F4A08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotLanches.Payment", "Adapters\Drivens\DotLanches.Payment\DotLanches.Payment.csproj", "{56D42F1A-76B0-4E33-98CF-644749860987}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C311781-5ADF-4FDA-A5C0-C31EC01A2662} = {6C311781-5ADF-4FDA-A5C0-C31EC01A2662}
+		{8EDAC299-AF63-4262-AA0B-59BDCB42B373} = {8EDAC299-AF63-4262-AA0B-59BDCB42B373}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
