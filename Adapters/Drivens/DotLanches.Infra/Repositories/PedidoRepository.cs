@@ -23,9 +23,9 @@ namespace DotLanches.Infra.Repositories
 
             if (pedido.ClienteCpf is not null)
             {
-                var clienteCpf = await _dbContext.Clientes.FirstOrDefaultAsync(c => c.Cpf == pedido.ClienteCpf) ??
+                var clienteCpf = await _dbContext.Clientes.FirstOrDefaultAsync(c => c.Cpf.Number == pedido.ClienteCpf) ??
                     throw new EntityNotFoundException("Cliente not found!");
-                pedido.ClienteCpf = clienteCpf.Cpf;
+                pedido.ClienteCpf = clienteCpf.Cpf.Number;
             }
 
             _dbContext.Pedidos.Add(pedido);
