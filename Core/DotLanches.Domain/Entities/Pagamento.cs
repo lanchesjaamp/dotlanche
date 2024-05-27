@@ -17,9 +17,15 @@ public class Pagamento
         IdPedido = idPedido ?? throw new ArgumentNullException(nameof(idPedido));
     }
 
-    public void ConfirmPayment()
+    public void Confirm()
     {
         this.IsAccepted = true;
-        this.RegisteredAt = DateTime.Now;
+        this.RegisteredAt = DateTime.UtcNow;
+    }
+
+    public void RefusePayment()
+    {
+        this.IsAccepted = false;
+        this.RegisteredAt = DateTime.UtcNow;
     }
 }

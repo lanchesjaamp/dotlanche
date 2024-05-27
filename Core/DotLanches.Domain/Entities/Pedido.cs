@@ -44,4 +44,8 @@ public class Pedido
             throw new DomainValidationException(nameof(TotalPrice));
     }
 
+    public void ReceivePagamento()
+    {
+        this.Status = Status.Recebido();
+    }
 }
