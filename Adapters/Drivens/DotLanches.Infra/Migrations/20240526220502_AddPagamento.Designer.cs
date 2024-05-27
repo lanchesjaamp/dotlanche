@@ -3,6 +3,7 @@ using System;
 using DotLanches.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotLanches.Infra.Migrations
 {
     [DbContext(typeof(DotLanchesDbContext))]
-    partial class DotLanchesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526220502_AddPagamento")]
+    partial class AddPagamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,15 +113,15 @@ namespace DotLanches.Infra.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("HorarioRegistro")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int?>("IdPedido")
                         .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<bool?>("IsAccepted")
                         .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("RegisteredAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -132,9 +135,6 @@ namespace DotLanches.Infra.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AddedToQueueAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ClienteCpf")
                         .HasColumnType("text");

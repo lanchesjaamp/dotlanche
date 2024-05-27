@@ -18,6 +18,7 @@ namespace DotLanches.Infra.Extensions
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IPagamentoRepository, PagamentoRepository>();
 
             return services;
         }

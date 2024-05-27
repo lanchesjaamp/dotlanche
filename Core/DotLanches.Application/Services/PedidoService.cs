@@ -1,4 +1,4 @@
-﻿#pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
+#pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Domain.Interfaces.Services;
@@ -48,5 +48,6 @@ namespace DotLanches.Application.Services
 
             return pedidos;
         } 
+        public async Task<int> QueueKeyAssignment(int idPedido) => await _pedidoRepository.AssignKey(idPedido);
     }
 }

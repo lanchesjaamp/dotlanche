@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotLanches.Infra.Data
 {
-    internal class DotLanchesDbContext : DbContext
+    public class DotLanchesDbContext : DbContext
     {
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
@@ -12,6 +12,7 @@ namespace DotLanches.Infra.Data
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Combo> Combos { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<Pagamento> Pagamentos { get; set; }
 
         public DotLanchesDbContext(DbContextOptions<DotLanchesDbContext> options) : base(options)
         {
@@ -25,6 +26,7 @@ namespace DotLanches.Infra.Data
             new PedidoModelConfiguration().Configure(modelBuilder.Entity<Pedido>());
             new ComboModelConfiguration().Configure(modelBuilder.Entity<Combo>());
             new StatusModelConfiguration().Configure(modelBuilder.Entity<Status>());
+            new PagamentoModelConfiguration().Configure(modelBuilder.Entity<Pagamento>());
         }
     }
 }

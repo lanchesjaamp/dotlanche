@@ -11,6 +11,8 @@ public class Pedido
     public Status Status { get; set; }
     public decimal TotalPrice { get; set; }
     public IEnumerable<Combo> Combos { get; set; }
+    public int QueueKey { get; set; }
+    public DateTime AddedToQueueAt { get; set; }
 
     private Pedido() { }
 
@@ -41,4 +43,10 @@ public class Pedido
         if (TotalPrice <= 0)
             throw new DomainValidationException(nameof(TotalPrice));
     }
+
+    public void ReceivePagamento()
+    {
+        this.Status = Status.Recebido();
+    }
+
 }

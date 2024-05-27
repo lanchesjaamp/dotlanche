@@ -26,6 +26,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotLanches.Application", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotLanches.Domain", "Core\DotLanches.Domain\DotLanches.Domain.csproj", "{3102FF51-31B8-409E-A387-9942BE4F4A08}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotLanches.Payment", "Adapters\Drivens\DotLanches.Payment\DotLanches.Payment.csproj", "{56D42F1A-76B0-4E33-98CF-644749860987}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C311781-5ADF-4FDA-A5C0-C31EC01A2662} = {6C311781-5ADF-4FDA-A5C0-C31EC01A2662}
+		{8EDAC299-AF63-4262-AA0B-59BDCB42B373} = {8EDAC299-AF63-4262-AA0B-59BDCB42B373}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +54,10 @@ Global
 		{3102FF51-31B8-409E-A387-9942BE4F4A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3102FF51-31B8-409E-A387-9942BE4F4A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3102FF51-31B8-409E-A387-9942BE4F4A08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56D42F1A-76B0-4E33-98CF-644749860987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D42F1A-76B0-4E33-98CF-644749860987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D42F1A-76B0-4E33-98CF-644749860987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D42F1A-76B0-4E33-98CF-644749860987}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +69,7 @@ Global
 		{05F84372-F3A0-486D-90F5-088085822835} = {8FEFE8BE-C893-418B-9B03-88E3EB773398}
 		{8EDAC299-AF63-4262-AA0B-59BDCB42B373} = {85D7D435-942E-4DA0-9968-F51539975A0D}
 		{3102FF51-31B8-409E-A387-9942BE4F4A08} = {85D7D435-942E-4DA0-9968-F51539975A0D}
+		{56D42F1A-76B0-4E33-98CF-644749860987} = {C97A4589-0E27-4BC4-86D0-0431539AB33E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D9EB52E-6F03-419F-910A-1788EF784D74}

@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Core\DotLanches.Application\DotLanches.Application.csproj" />
       <ProjectReference Include="..\..\Drivens\DotLanches.Infra\DotLanches.Infra.csproj" />
+      <ProjectReference Include="..\..\Drivens\DotLanches.Payment\DotLanches.Payment.csproj" />
     </ItemGroup>
 
 	<PropertyGroup>
