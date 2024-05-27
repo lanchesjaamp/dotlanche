@@ -1,6 +1,4 @@
-﻿using DotLanches.Domain.Entities;
-
-namespace DotLanches.Api.Dtos
+﻿namespace DotLanches.Api.Dtos
 {
     public class PagamentoDto
     {

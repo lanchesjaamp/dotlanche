@@ -1,9 +1,9 @@
 ﻿using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
 using DotLanches.Application.Services;
-using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotLanches.Api.Controllers
 {
@@ -24,16 +24,16 @@ namespace DotLanches.Api.Controllers
         /// <summary>
         /// Envia os dados para o meio de pagamento e retorna a senha para retirar o pedido.
         /// </summary>
-        /// <param name="pedido">Dados do pedido a ser pago</param>
+        /// <param name="pagamentoRequest">Dados de requisição do pagamento</param>
         /// <returns>Situação do pagamento e senha para retirada do pedido.</returns>
         [HttpPost]
         [ProducesResponseType(typeof(PagamentoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ExecutarPagamento([FromBody] Pedido pedido)
+        public async Task<IActionResult> ExecutePayment([Required][FromBody] PagamentoRequestDto pagamentoRequest)
         {
-            var payResponse = await _pagamentoService.Checkout(pedido);
-            var queueKey = await _pedidoService.QueueKeyAssignment(pedido);
+            var payResponse = await _pagamentoService.ProcessPagamento(pagamentoRequest.IdPedido);
+            var queueKey = await _pedidoService.QueueKeyAssignment(pagamentoRequest.IdPedido);
             var pagamentoDto = payResponse.ToDtoModel(queueKey);
             return Ok(pagamentoDto);
         }

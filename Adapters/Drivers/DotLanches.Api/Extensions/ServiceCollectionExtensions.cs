@@ -4,7 +4,8 @@ using DotLanches.Domain.Interfaces.Services;
 using DotLanches.Infra.Extensions;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using DotLanches.Payment.Services;
+using DotLanches.Domain.Ports;
+using DotLanches.Payment.FakeCheckout;
 
 namespace DotLanches.Api.Extensions
 {
@@ -20,7 +21,7 @@ namespace DotLanches.Api.Extensions
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IPedidoService, PedidoService>();
             services.AddScoped<IPagamentoService, PagamentoService>();
-
+            services.AddScoped<ICheckout, FakeCheckout>();
             services.AddExceptionHandler<ExceptionFilter>();
             services.AddProblemDetails();
 
