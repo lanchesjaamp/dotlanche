@@ -48,6 +48,6 @@ namespace DotLanches.Application.Services
 
             return pedidos;
         } 
-        public Task QueueKeyAssignment(Pedido pedido) => await _pedidoRepository.AssignKey(pedido);
+        public async Task<int> QueueKeyAssignment(Pedido pedido) => await _pedidoRepository.AssignKey(pedido);
     }
 }
