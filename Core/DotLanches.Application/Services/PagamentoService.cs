@@ -33,8 +33,8 @@ namespace DotLanches.Application.Services
                 pagamento.ConfirmPayment();
                 pedido.ReceivePagamento();
 
-                pagamento = await _repository.Update(pagamento);
                 await _pedidoRepository.Update(pedido);
+                pagamento = await _repository.Update(pagamento);
             }
 
             return pagamento;

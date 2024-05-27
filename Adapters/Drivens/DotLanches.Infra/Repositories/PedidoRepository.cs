@@ -87,12 +87,13 @@ namespace DotLanches.Infra.Repositories
                     .ThenInclude(c => c.Sobremesa)
                         .ThenInclude(s => s.Categoria)
                 .Include(p => p.Status)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<Pedido> Update(Pedido pedido)
         {
             _dbContext.Update(pedido);
             await _dbContext.SaveChangesAsync();
+            _dbContext.ChangeTracker.Clear();
             return pedido;
         }
     }

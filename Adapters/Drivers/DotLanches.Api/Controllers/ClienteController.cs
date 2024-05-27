@@ -43,9 +43,9 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(Cliente), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update([FromBody] ClienteDto clienteDto)
+        public async Task<IActionResult> Update(int idCliente, [FromBody] ClienteDto clienteDto)
         {
-            var cliente = await _clienteService.Edit(clienteDto.ToDomainModel());
+            var cliente = await _clienteService.Edit(clienteDto.ToDomainModel(idCliente));
 
             return Ok(cliente);
         }
