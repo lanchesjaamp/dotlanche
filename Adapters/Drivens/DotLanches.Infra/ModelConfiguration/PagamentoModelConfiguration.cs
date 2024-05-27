@@ -11,7 +11,7 @@ namespace DotLanches.Infra.ModelConfiguration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.IdPedido).IsRequired();
             builder.Property(x => x.IsAccepted);
-            builder.Property(x => x.HorarioRegistro);
+            builder.Property(x => x.RegisteredAt);
         }
     }
 }

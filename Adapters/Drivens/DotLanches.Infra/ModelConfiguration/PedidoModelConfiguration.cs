@@ -12,6 +12,8 @@ namespace DotLanches.Infra.ModelConfiguration
             builder.Property(p => p.ClienteCpf);
             builder.Property(p => p.CreatedAt).HasDefaultValueSql("NOW()");
             builder.Ignore(p => p.TotalPrice);
+            builder.Property(p => p.QueueKey);
+            builder.Property(p => p.AddedToQueueAt);
         }
     }
 }
