@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dotlanche-deployment
+  name: dotlanche-api-deployment
   labels:
     app: dotlanche
 spec:
