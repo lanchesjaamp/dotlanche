@@ -11,9 +11,12 @@ spec:
       ports:
         - containerPort: 5432
       env:
+        - name: POSTGRES_DB
+          value: dotlanches
         - name: POSTGRES_USER
           value: admin 
         - name: POSTGRES_PASSWORD
-          value: P@55w0rd
-        - name: POSTGRES_DB
-          value: dotlanches
+          valueFrom:
+            secretKeyRef: 
+              name: dotlanche-secrets
+              key: db-password
