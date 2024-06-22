@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotlanche-deployment
+  labels:
+    app: dotlanche
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      app: dotlanche-api
+  template:
+    metadata:
+      labels:
+        app: dotlanche-api
+    spec:
+      containers:
+        - name: c-dotlanche-api
+          image: dotlanche-api:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
