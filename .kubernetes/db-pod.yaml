@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dotlanche-db
+  labels:
+    app: dotlanche-db
+spec:
+  containers:
+    - name: c-dotlanche-db
+      image: postgres:16.3-alpine3.18
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_USER
+          value: admin 
+        - name: POSTGRES_PASSWORD
+          value: P@55w0rd
+        - name: POSTGRES_DB
+          value: dotlanches

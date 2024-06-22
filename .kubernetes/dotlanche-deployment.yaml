@@ -22,3 +22,7 @@ spec:
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
+            - name: ConnectionStrings__DefaultConnection
+              value: Host=dotlanche-db-svc;Port=5432;Database=dotlanches;Username=admin;Password=P@55w0rd
+            - name: RunMigrationsOnStartup
+              value: "true"
