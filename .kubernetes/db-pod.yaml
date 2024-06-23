@@ -20,7 +20,7 @@ spec:
             secretKeyRef: 
               name: dotlanche-secrets
               key: db-password
-  volumes:
-    - name: db-vol
-      persistentVolumeClaim:
-        claimName: dotlanche-persistent-volume-claim
+  #volumes:
+    #- name: db-vol
+      #persistentVolumeClaim:
+        #claimName: dotlanche-persistent-volume-claim

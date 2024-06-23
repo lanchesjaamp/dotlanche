@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: c-dotlanche-api
-          image: dotlanche-api:1.0
+          image: atcorrea/dotlanche-api:1.0
           ports:
             - containerPort: 8080
           env:
