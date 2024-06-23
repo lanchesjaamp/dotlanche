@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-COPY ../../.. .
+COPY . .
 RUN dotnet restore "Adapters/Drivers/DotLanches.Api/DotLanches.Api.csproj"
 RUN dotnet publish "Adapters/Drivers/DotLanches.Api/DotLanches.Api.csproj" -c Release -o out --no-restore
 
