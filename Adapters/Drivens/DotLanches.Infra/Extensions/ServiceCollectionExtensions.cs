@@ -14,7 +14,11 @@ namespace DotLanches.Infra.Extensions
             services.AddDbContext<DotLanchesDbContext>(
                 opt => opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-            services.MigrateDatabase();
+            bool.TryParse(configuration.GetSection("RunMigrationsOnStartup").Value, out var shouldRunMigrations);
+
+            if(shouldRunMigrations)
+                services.MigrateDatabase();
+
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();

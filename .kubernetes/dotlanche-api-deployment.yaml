@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotlanche-api-deployment
+  labels:
+    app: dotlanche
+spec:
+  selector:
+    matchLabels: 
+      app: dotlanche-api
+  template:
+    metadata:
+      labels:
+        app: dotlanche-api
+    spec:
+      containers:
+        - name: c-dotlanche-api
+          image: atcorrea/dotlanche-api:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef: 
+                  name: dotlanche-secrets
+                  key: connection-string
+            - name: RunMigrationsOnStartup
+              value: "true"

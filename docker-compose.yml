@@ -25,7 +25,9 @@ services:
       - dotLanchesNetwork
 
   api:
-    build: -f adapters/drivers/DotLanches.Api/Dockerfile .
+    build: 
+      context: .
+      dockerfile: ./Adapters/Drivers/DotLanches.Api/Dockerfile
     container_name: dotlanches_api
     restart: always
     depends_on:

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dotlanche-db
+  labels:
+    app: dotlanche-db
+spec:
+  containers:
+    - name: c-dotlanche-db
+      image: postgres:16.3-alpine3.18
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_DB
+          value: dotlanches
+        - name: POSTGRES_USER
+          value: admin 
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef: 
+              name: dotlanche-secrets
+              key: db-password
+  #volumes:
+    #- name: db-vol
+      #persistentVolumeClaim:
+        #claimName: dotlanche-persistent-volume-claim
