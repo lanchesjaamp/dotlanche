@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dotlanche-pod
+spec:
+  containers:
+    - name: dotlanche-pod
+      image: atcorrea/dotlanche-api:1.0
+      volumeMounts:
+        - mountPath: /app/data
+          name: dotlanche-storage
+  volumes:
+    - name: dotlanche-storage
+      persistentVolumeClaim:
+        claimName: dotlanche-persistent-volume-claim

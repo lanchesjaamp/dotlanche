@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: dotlanche-persistent-volume
-  labels: 
+  name: dotlanche-persistent-volume-new
+  labels:
     app: dotlanche-pv
 spec:
   capacity:
     storage: 500Mi
   accessModes:
-    - ReadWriteOnce 
-  storageClassName: local-storage 
+    - ReadWriteOnce
+  storageClassName: local-storage
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: C:\Users\André\repos\dotlanche\.volumeMount
+    path: /mnt/data/dotlanche
