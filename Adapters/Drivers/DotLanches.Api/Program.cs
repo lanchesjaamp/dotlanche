@@ -5,6 +5,8 @@ builder.Services.ConfigureApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
+app.MapHealthChecks("/health");
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();

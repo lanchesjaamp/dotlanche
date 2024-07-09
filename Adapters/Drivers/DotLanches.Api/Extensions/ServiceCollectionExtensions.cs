@@ -25,6 +25,8 @@ namespace DotLanches.Api.Extensions
             services.AddExceptionHandler<ExceptionFilter>();
             services.AddProblemDetails();
 
+            services.ConfigureHealthChecks(configuration);
+
             return services;
         }
 
@@ -43,6 +45,17 @@ namespace DotLanches.Api.Extensions
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
+
+            return services;
+        }
+
+        private static IServiceCollection ConfigureHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ??
+                throw new Exception("No database connection string found!");
+
+            services.AddHealthChecks()
+                .AddNpgSql(connectionString);
 
             return services;
         }
