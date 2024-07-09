@@ -18,6 +18,19 @@ spec:
           image: atcorrea/dotlanche-api:1.0
           ports:
             - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080 
+            initialDelaySeconds: 5
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080 
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            failureThreshold: 3
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
