@@ -1,7 +1,8 @@
 ﻿using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
-using DotLanches.Application.Services;
-using DotLanches.Domain.Interfaces.Services;
+using DotLanches.Application.UseCases;
+using DotLanches.Domain.Interfaces.Repositories;
+using DotLanches.Domain.Ports;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,13 +13,15 @@ namespace DotLanches.Api.Controllers
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public class PagamentoController : ControllerBase
     {
-        private readonly IPagamentoService _pagamentoService;
-        private readonly IPedidoService _pedidoService;
+        private readonly IPagamentoRepository _pagamentoRepository;
+        private readonly IPedidoRepository _pedidoRepository;
+        private readonly ICheckout _checkout;
 
-        public PagamentoController(IPagamentoService pagamentoService, IPedidoService pedidoService)
+        public PagamentoController(IPagamentoRepository pagamentoRepository, IPedidoRepository pedidoRepository, ICheckout checkout)
         {
-            _pagamentoService = pagamentoService;
-            _pedidoService = pedidoService;
+            _pagamentoRepository = pagamentoRepository;
+            _pedidoRepository = pedidoRepository;
+            _checkout = checkout;
         }
 
         /// <summary>
@@ -32,8 +35,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ExecutePayment([Required][FromBody] PagamentoRequestDto pagamentoRequest)
         {
-            var payResponse = await _pagamentoService.ProcessPagamento(pagamentoRequest.IdPedido);
-            var queueKey = await _pedidoService.QueueKeyAssignment(pagamentoRequest.IdPedido);
+            var payResponse = await PagamentoUseCases.ProcessPagamento(pagamentoRequest.IdPedido, _pedidoRepository, _pagamentoRepository, _checkout);
+            var queueKey = await PedidoUseCases.QueueKeyAssignment(pagamentoRequest.IdPedido, _pedidoRepository);
             var pagamentoDto = payResponse.ToDtoModel(queueKey);
             return Ok(pagamentoDto);
         }

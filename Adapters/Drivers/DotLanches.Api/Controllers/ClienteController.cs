@@ -1,7 +1,8 @@
 using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
-using DotLanches.Application.Services;
+using DotLanches.Application.UseCases;
 using DotLanches.Domain.Entities;
+using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotLanches.Api.Controllers
@@ -11,11 +12,11 @@ namespace DotLanches.Api.Controllers
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public class ClienteController : ControllerBase
     {
-        private readonly IClienteService _clienteService;
+        private readonly IClienteRepository _clienteRepository;
 
-        public ClienteController(IClienteService clienteService)
+        public ClienteController(IClienteRepository clienteRepository)
         {
-            _clienteService = clienteService;
+            _clienteRepository = clienteRepository;
         }
         
         /// <summary>
@@ -28,7 +29,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] ClienteDto clienteDto)
         {
-            await _clienteService.Add(clienteDto.ToDomainModel());
+            await ClienteUseCases.Add(clienteDto.ToDomainModel(), _clienteRepository);
 
             return StatusCode(StatusCodes.Status201Created);
         }
@@ -45,7 +46,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(int idCliente, [FromBody] ClienteDto clienteDto)
         {
-            var cliente = await _clienteService.Edit(clienteDto.ToDomainModel(idCliente));
+            var cliente = await ClienteUseCases.Edit(clienteDto.ToDomainModel(idCliente), _clienteRepository);
 
             return Ok(cliente);
         }
@@ -60,7 +61,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] int idCliente)
         {
-            var cliente = await _clienteService.Delete(idCliente);
+            var cliente = await ClienteUseCases.Delete(idCliente, _clienteRepository);
 
             return Ok(cliente);
         }
@@ -73,7 +74,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var clienteList = await _clienteService.GetAll();
+            var clienteList = await ClienteUseCases.GetAll(_clienteRepository);
             return Ok(clienteList);
         }
 
@@ -88,7 +89,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByCpf(string cpf)
         {
-            var clienteList = await _clienteService.GetByCpf(cpf);
+            var clienteList = await ClienteUseCases.GetByCpf(cpf, _clienteRepository);
             return Ok(clienteList);
         }
     }

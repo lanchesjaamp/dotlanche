@@ -1,7 +1,8 @@
 ﻿using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
+using DotLanches.Application.UseCases;
 using DotLanches.Domain.Entities;
-using DotLanches.Domain.Interfaces.Services;
+using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotLanches.Api.Controllers
@@ -11,11 +12,13 @@ namespace DotLanches.Api.Controllers
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public class PedidoController : ControllerBase
     {
-        private readonly IPedidoService _pedidoService;
+        private readonly IPedidoRepository _pedidoRepository;
+        private readonly IProdutoRepository _produtoRepository;
 
-        public PedidoController(IPedidoService pedidoService)
+        public PedidoController(IPedidoRepository pedidoRepository, IProdutoRepository produtoRepository)
         {
-            _pedidoService = pedidoService;
+            _pedidoRepository = pedidoRepository;
+            _produtoRepository = produtoRepository;
         }
 
         /// <summary>
@@ -28,7 +31,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] PedidoDto pedidoDto)
         {
-            await _pedidoService.Add(pedidoDto.ToDomainModel());
+            await PedidoUseCases.Add(pedidoDto.ToDomainModel(), _produtoRepository, _pedidoRepository);
             return StatusCode(StatusCodes.Status201Created);
         }
 
@@ -40,7 +43,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Pedido>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var pedidoList = await _pedidoService.GetAll();
+            var pedidoList = await PedidoUseCases.GetAll(_pedidoRepository);
             return Ok(pedidoList);
         }
     }
