@@ -1,18 +1,18 @@
 ﻿using DotLanches.Domain.Entities;
-using DotLanches.Domain.Interfaces.Repositories;
-using DotLanches.Domain.Ports;
+using DotLanches.Domain.Interfaces.ExternalInterfaces;
+using DotLanches.Domain.Interfaces.Gateways;
 
 namespace DotLanches.Application.UseCases
 {
     public static class PagamentoUseCases
     {
-        public static async Task<Pagamento> ProcessPagamento(int idPedido, IPedidoRepository pedidoRepository, IPagamentoRepository pagamentoRepository, ICheckout checkout)
+        public static async Task<Pagamento> ProcessPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway, ICheckout checkout)
         {
-            var pedido = await pedidoRepository.GetById(idPedido) ??
+            var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
 
             var pagamento = new Pagamento(pedido.Id);
-            await pagamentoRepository.Add(pagamento);
+            await pagamentoGateway.Add(pagamento);
 
             //Fake Checkout for current version
             var paymentSucceded = checkout.ProcessPayment(pagamento);
@@ -22,8 +22,8 @@ namespace DotLanches.Application.UseCases
                 pagamento.ConfirmPayment();
                 pedido.ReceivePagamento();
 
-                await pedidoRepository.Update(pedido);
-                pagamento = await pagamentoRepository.Update(pagamento);
+                await pedidoGateway.Update(pedido);
+                pagamento = await pagamentoGateway.Update(pagamento);
             }
 
             return pagamento;

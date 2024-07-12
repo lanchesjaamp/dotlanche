@@ -1,6 +1,6 @@
 ﻿using DotLanches.Domain.Entities;
 
-namespace DotLanches.Domain.Ports
+namespace DotLanches.Domain.Interfaces.ExternalInterfaces
 {
     public interface ICheckout
     {
