@@ -2,8 +2,8 @@
 using DotLanches.Infra.Extensions;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using DotLanches.Domain.Ports;
 using DotLanches.Payment.FakeCheckout;
+using DotLanches.Domain.Interfaces.ExternalInterfaces;
 
 namespace DotLanches.Api.Extensions
 {

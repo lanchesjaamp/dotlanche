@@ -1,10 +1,10 @@
-﻿using DotLanches.Api.Dtos;
-using DotLanches.Api.Mappers;
-using DotLanches.Application.UseCases;
+﻿using DotLanches.Presenters.Dtos;
+using DotLanches.Controllers;
+using DotLanches.Domain.Interfaces.ExternalInterfaces;
 using DotLanches.Domain.Interfaces.Repositories;
-using DotLanches.Domain.Ports;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using DotLanches.Api.Dtos;
 
 namespace DotLanches.Api.Controllers
 {
@@ -35,10 +35,10 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ExecutePayment([Required][FromBody] PagamentoRequestDto pagamentoRequest)
         {
-            var payResponse = await PagamentoUseCases.ProcessPagamento(pagamentoRequest.IdPedido, _pedidoRepository, _pagamentoRepository, _checkout);
-            var queueKey = await PedidoUseCases.QueueKeyAssignment(pagamentoRequest.IdPedido, _pedidoRepository);
-            var pagamentoDto = payResponse.ToDtoModel(queueKey);
-            return Ok(pagamentoDto);
+            var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
+            var queueKey = await _pedidoRepository.AssignKey(pagamentoRequest.IdPedido);
+            var payResponse = await adapterPagamento.ProcessPagamento(pagamentoRequest.IdPedido, queueKey);
+            return Ok(payResponse);
         }
     }
 }

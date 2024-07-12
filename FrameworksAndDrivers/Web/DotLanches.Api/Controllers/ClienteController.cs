@@ -1,6 +1,6 @@
 using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
-using DotLanches.Application.UseCases;
+using DotLanches.Controllers;
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +29,9 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] ClienteDto clienteDto)
         {
-            await ClienteUseCases.Add(clienteDto.ToDomainModel(), _clienteRepository);
+            var adapterController = new AdapterClienteController(_clienteRepository);
+
+            await adapterController.Create(clienteDto.ToDomainModel());
 
             return StatusCode(StatusCodes.Status201Created);
         }
@@ -46,7 +48,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(int idCliente, [FromBody] ClienteDto clienteDto)
         {
-            var cliente = await ClienteUseCases.Edit(clienteDto.ToDomainModel(idCliente), _clienteRepository);
+            var cliente = await _clienteRepository.Edit(clienteDto.ToDomainModel());
 
             return Ok(cliente);
         }
@@ -61,7 +63,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] int idCliente)
         {
-            var cliente = await ClienteUseCases.Delete(idCliente, _clienteRepository);
+            var cliente = await _clienteRepository.Delete(idCliente);
 
             return Ok(cliente);
         }
@@ -74,7 +76,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var clienteList = await ClienteUseCases.GetAll(_clienteRepository);
+            var clienteList = await _clienteRepository.GetAll();
             return Ok(clienteList);
         }
 
@@ -89,8 +91,11 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByCpf(string cpf)
         {
-            var clienteList = await ClienteUseCases.GetByCpf(cpf, _clienteRepository);
-            return Ok(clienteList);
+            var adapterController = new AdapterClienteController(_clienteRepository);
+
+            var cliente = adapterController.GetByCpf(cpf); 
+
+            return Ok(cliente);
         }
     }
 }

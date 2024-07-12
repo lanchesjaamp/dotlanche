@@ -1,6 +1,7 @@
 ﻿using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
 using DotLanches.Application.UseCases;
+using DotLanches.Controllers;
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] PedidoDto pedidoDto)
         {
-            await PedidoUseCases.Add(pedidoDto.ToDomainModel(), _produtoRepository, _pedidoRepository);
+            var adapterPedido = new AdapterPedidoController(_produtoRepository, _pedidoRepository);
+            await adapterPedido.Create(pedidoDto.ToDomainModel());
             return StatusCode(StatusCodes.Status201Created);
         }
 
@@ -43,7 +45,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Pedido>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var pedidoList = await PedidoUseCases.GetAll(_pedidoRepository);
+            var adapterPedido = new AdapterPedidoController(_produtoRepository, _pedidoRepository);
+            var pedidoList = await adapterPedido.GetAll();
             return Ok(pedidoList);
         }
     }

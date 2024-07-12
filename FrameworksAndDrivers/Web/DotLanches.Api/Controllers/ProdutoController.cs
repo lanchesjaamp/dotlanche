@@ -1,6 +1,5 @@
 ﻿using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
-using DotLanches.Application.UseCases;
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +29,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] ProdutoDto produtoDto)
         {
-            await ProdutoUseCases.Add(produtoDto.ToDomainModel(), _produtoRepository);
+            await _produtoRepository.Add(produtoDto.ToDomainModel());
 
             return StatusCode(StatusCodes.Status201Created);
         }
@@ -47,7 +46,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] int idProduto, [FromBody] ProdutoDto produtoDto)
         {
-            var produto = await ProdutoUseCases.Edit(produtoDto.ToDomainModel(idProduto), _produtoRepository);
+            var produto = await _produtoRepository.Edit(produtoDto.ToDomainModel(idProduto));
 
             return Ok(produto);
         }
@@ -62,7 +61,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] int idProduto)
         {
-            var produto = await ProdutoUseCases.Delete(idProduto, _produtoRepository);
+            var produto = await _produtoRepository.Delete(idProduto);
 
             return Ok(produto);
         }
@@ -76,7 +75,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Produto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByCategoria([Required][FromQuery] int idCategoria)
         {
-            var produtoList = await ProdutoUseCases.GetByCategoria(idCategoria, _produtoRepository);
+            var produtoList = await _produtoRepository.GetByCategoria(idCategoria);
             return Ok(produtoList);
         }
 
@@ -89,7 +88,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(Produto), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById([Required][FromRoute] int idProduto)
         {
-            var produtoList = await ProdutoUseCases.GetById(idProduto, _produtoRepository);
+            var produtoList = await _produtoRepository.GetById(idProduto);
             return Ok(produtoList);
         }
     }
