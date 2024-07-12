@@ -1,5 +1,5 @@
 ﻿using DotLanches.Domain.Entities;
-using DotLanches.Domain.Ports;
+using DotLanches.Domain.Interfaces.ExternalInterfaces;
 
 namespace DotLanches.Payment.FakeCheckout
 {

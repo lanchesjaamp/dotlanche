@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\DotLanches.Application\DotLanches.Application.csproj" />
-    <ProjectReference Include="..\..\..\InterfaceAdapters\Gateways\DotLanches.Infra\DotLanches.Infra.csproj" />
+    <ProjectReference Include="..\..\..\Core\DotLanches.Application\DotLanches.UseCases.csproj" />
   </ItemGroup>
 
 </Project>
