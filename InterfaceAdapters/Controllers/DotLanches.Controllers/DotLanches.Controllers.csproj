@@ -10,9 +10,7 @@
     <ProjectReference Include="..\..\..\Core\DotLanches.Application\DotLanches.UseCases.csproj" />
     <ProjectReference Include="..\..\Gateways\DotLanches.Gateways\DotLanches.Gateways.csproj" />
     <ProjectReference Include="..\..\Presenters\DotLanches.Presenters\DotLanches.Presenters.csproj" />
-    <ProjectReference Include="..\Core\DotLanches.Application\DotLanches.UseCases.csproj" />
-    <ProjectReference Include="..\InterfaceAdapters\Gateways\DotLanches.Gateways\DotLanches.Gateways.csproj" />
-    <ProjectReference Include="..\InterfaceAdapters\Presenters\DotLanches.Presenters\DotLanches.Presenters.csproj" />
   </ItemGroup>
+
 
 </Project>
