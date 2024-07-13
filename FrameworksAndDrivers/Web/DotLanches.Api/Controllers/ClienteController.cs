@@ -48,7 +48,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(int idCliente, [FromBody] ClienteDto clienteDto)
         {
-            var cliente = await _clienteRepository.Edit(clienteDto.ToDomainModel());
+            var cliente = await _clienteRepository.Edit(clienteDto.ToDomainModel(idCliente));
 
             return Ok(cliente);
         }
@@ -93,7 +93,7 @@ namespace DotLanches.Api.Controllers
         {
             var adapterController = new AdapterClienteController(_clienteRepository);
 
-            var cliente = adapterController.GetByCpf(cpf); 
+            var cliente = await adapterController.GetByCpf(cpf); 
 
             return Ok(cliente);
         }
