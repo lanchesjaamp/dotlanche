@@ -3,18 +3,18 @@ using DotLanches.Domain.Entities;
 
 namespace DotLanches.Presenters.Mappers
 {
-    public static class PagamentoDtoMapper
+    public static class PagamentoPresenter
     {
-        public static PagamentoDto ToDtoModel(this Pagamento pagamento, int queueKey = 0)
+        public static PagamentoViewModel GetPagamentoViewModel(Pagamento pagamento, int queueKey = 0)
         {
-            var dtoModel = new PagamentoDto()
+            var viewModel = new PagamentoViewModel()
             {
                 IsAccepted = pagamento.IsAccepted,
                 RegisteredAt = pagamento.RegisteredAt,
                 QueueKey = queueKey
             };
 
-            return dtoModel;
+            return viewModel;
         }
     }
 }

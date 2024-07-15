@@ -20,14 +20,13 @@ namespace DotLanches.Controllers
             _checkout = checkout;
         }
 
-        public async Task<PagamentoDto?> ProcessPagamento(int idPedido, int queueKey)
+        public async Task<PagamentoViewModel?> ProcessPagamento(int idPedido, int queueKey)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
             var payResponse = await PagamentoUseCases.ProcessPagamento(idPedido, pedidoGateway, pagamentoGateway, _checkout);
-            var dto = payResponse.ToDtoModel(queueKey);
-            return dto;
-        }
 
+            return PagamentoPresenter.GetPagamentoViewModel(payResponse, queueKey);
+        }
     }
 }

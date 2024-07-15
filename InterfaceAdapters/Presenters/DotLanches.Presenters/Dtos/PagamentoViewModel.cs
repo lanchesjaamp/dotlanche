@@ -1,6 +1,6 @@
 ﻿namespace DotLanches.Presenters.Dtos
 {
-    public class PagamentoDto
+    public class PagamentoViewModel
     {
         public bool? IsAccepted { get; set; }
 

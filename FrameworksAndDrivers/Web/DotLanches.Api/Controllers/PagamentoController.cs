@@ -30,7 +30,7 @@ namespace DotLanches.Api.Controllers
         /// <param name="pagamentoRequest">Dados de requisição do pagamento</param>
         /// <returns>Situação do pagamento e senha para retirada do pedido.</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(PagamentoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagamentoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ExecutePayment([Required][FromBody] PagamentoRequestDto pagamentoRequest)
