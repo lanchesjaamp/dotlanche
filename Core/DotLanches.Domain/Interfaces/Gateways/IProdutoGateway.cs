@@ -1,8 +1,8 @@
 ﻿using DotLanches.Domain.Entities;
 
-namespace DotLanches.Domain.Interfaces.Repositories
+namespace DotLanches.Domain.Interfaces.Gateways
 {
-    public interface IProdutoRepository
+    public interface IProdutoGateway
     {
         public Task Add(Produto produto);
 

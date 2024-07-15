@@ -27,7 +27,7 @@ services:
   api:
     build: 
       context: .
-      dockerfile: ./Adapters/Drivers/DotLanches.Api/Dockerfile
+      dockerfile: ./FrameworksAndDrivers/Web/DotLanches.Api/Dockerfile
     container_name: dotlanches_api
     restart: always
     depends_on:
@@ -35,6 +35,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=dotLanches;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
     networks:
       - dotLanchesNetwork
