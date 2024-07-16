@@ -8,6 +8,8 @@ spec:
   containers:
     - name: c-dotlanche-db
       image: postgres:16.3-alpine3.18
+      command: ["docker-entrypoint.sh"] #aumenta numero de conexões para testes de carga
+      args: ["-c", "max_connections=500"] 
       ports:
         - containerPort: 5432
       env:
