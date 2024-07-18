@@ -39,8 +39,10 @@ namespace DotLanches.Infra.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Pedido>> GetAll()
+        public async Task<IEnumerable<Pedido>> GetPedidosQueue()
         {
+            var queueStatusIds = new[] { Status.Pronto().Id, Status.EmPreparacao().Id, Status.Recebido().Id };
+
             var pedidos = await _dbContext.Pedidos
                 .Include(p => p.Combos)
                     .ThenInclude(c => c.Lanche)
@@ -55,9 +57,9 @@ namespace DotLanches.Infra.Repositories
                     .ThenInclude(c => c.Sobremesa)
                         .ThenInclude(s => s.Categoria)
                 .Include(p => p.Status)
-                .Where(p => p.Status.Id != Status.Finalizado().Id)
-                .Where(p => p.Status.Id != 4)
-                .OrderBy(p => p.CreatedAt)
+                    .Where(p => queueStatusIds.Contains(p.Status.Id))
+                .OrderByDescending(p => p.Status.Id)
+                .ThenBy(p => p.CreatedAt)
                 .ToListAsync();
 
             return pedidos;
