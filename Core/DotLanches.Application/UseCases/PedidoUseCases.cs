@@ -1,7 +1,6 @@
 #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Gateways;
-using DotLanches.Domain.Interfaces.Repositories;
 
 namespace DotLanches.Application.UseCases
 {
@@ -24,9 +23,9 @@ namespace DotLanches.Application.UseCases
             await pedidoGateway.Add(pedido);
         }
 
-        public static async Task<IEnumerable<Pedido>> GetAll(IPedidoGateway pedidoGateway)
+        public static async Task<IEnumerable<Pedido>> GetPedidosQueue(IPedidoGateway pedidoGateway)
         {
-            var pedidos = await pedidoGateway.GetAll();
+            var pedidos = await pedidoGateway.GetPedidosQueue();
 
             foreach (var pedido in pedidos)
             {
@@ -39,5 +38,6 @@ namespace DotLanches.Application.UseCases
 
             return pedidos;
         } 
+
     }
 }

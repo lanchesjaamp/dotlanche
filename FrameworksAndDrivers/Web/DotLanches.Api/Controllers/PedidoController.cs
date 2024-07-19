@@ -1,6 +1,5 @@
 ﻿using DotLanches.Api.Dtos;
 using DotLanches.Api.Mappers;
-using DotLanches.Application.UseCases;
 using DotLanches.Controllers;
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
@@ -38,15 +37,16 @@ namespace DotLanches.Api.Controllers
         }
 
         /// <summary>
-        /// Busca todos os pedidos
+        /// Busca a fila de pedidos. Traz os pedidos ordenados pelo status de preparação, do mais antigo ao mais novo e excluindo os finalizados
         /// </summary>
-        /// <returns>Lista de pedidos</returns>
-        [HttpGet]
+        /// <returns>Fila de pedidos</returns>
+        [HttpGet("queue")]
         [ProducesResponseType(typeof(IEnumerable<Pedido>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetQueue()
         {
             var adapterPedido = new AdapterPedidoController(_produtoRepository, _pedidoRepository);
-            var pedidoList = await adapterPedido.GetAll();
+            var pedidoList = await adapterPedido.GetPedidosQueue();
+
             return Ok(pedidoList);
         }
     }

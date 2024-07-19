@@ -24,10 +24,10 @@ namespace DotLanches.Controllers
             return;
         }
 
-        public async Task<IEnumerable<Pedido>> GetAll()
+        public async Task<IEnumerable<Pedido>> GetPedidosQueue()
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
-            var pedidoList = await PedidoUseCases.GetAll(pedidoGateway);
+            var pedidoList = await PedidoUseCases.GetPedidosQueue(pedidoGateway);
             return pedidoList;
         }
     }

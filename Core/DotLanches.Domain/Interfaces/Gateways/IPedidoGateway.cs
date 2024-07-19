@@ -10,7 +10,7 @@ namespace DotLanches.Domain.Interfaces.Gateways
 
         Task<int> AssignKey(int idPedido);
 
-        Task<IEnumerable<Pedido>> GetAll();
+        Task<IEnumerable<Pedido>> GetPedidosQueue();
 
         Task<Pedido?> GetById(int id);
     }
