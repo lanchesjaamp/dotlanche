@@ -18,6 +18,9 @@ O DotLanche é uma aplicação para gerenciamento de clientes e pedidos em um si
 - **DotLanches.Domain**: Contém as entidades e exceções do domínio.
 - **DotLanches.Infra**: Contém a camada de infraestrutura, como repositórios e configuração do banco de dados.
 
+## Arquitetura
+![arquitetura_dotlanche](docs/imgs/Arquitetura_Dotlanche.jpg)
+
 ## Requisitos
 
 - [.NET SDK 8.0](https://dotnet.microsoft.com/download)
