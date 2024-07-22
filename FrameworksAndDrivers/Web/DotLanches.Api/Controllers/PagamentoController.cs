@@ -25,7 +25,7 @@ namespace DotLanches.Api.Controllers
         }
 
         /// <summary>
-        /// Envia os dados para o meio de pagamento e retorna a senha para retirar o pedido.
+        /// Envia os dados para o meio de pagamento e retorna o QR Code para o cliente.
         /// </summary>
         /// <param name="pagamentoRequest">Dados de requisição do pagamento</param>
         /// <returns>QR Code para efetuar pagamento.</returns>
