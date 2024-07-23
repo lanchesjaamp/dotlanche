@@ -4,5 +4,5 @@ public class ProcessPagamentoRequestDto
 {
     public int IdPedido { get; set; }
 
-    public bool PaymentStatus { get; set; }
+    public bool IsAccepted { get; set; }
 }

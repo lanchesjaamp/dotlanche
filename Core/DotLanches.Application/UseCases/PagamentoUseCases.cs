@@ -11,6 +11,8 @@ namespace DotLanches.Application.UseCases
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
 
+            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
+
             var pagamento = new Pagamento(pedido.Id);
             await pagamentoGateway.Add(pagamento);
 
@@ -24,6 +26,8 @@ namespace DotLanches.Application.UseCases
         {
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
+
+            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
 
             var pagamento = new Pagamento(pedido.Id);
 
@@ -44,6 +48,8 @@ namespace DotLanches.Application.UseCases
         {
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
+
+            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
 
             var pagamento = new Pagamento(pedido.Id);
 
