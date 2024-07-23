@@ -20,7 +20,7 @@ namespace DotLanches.Controllers
             _checkout = checkout;
         }
 
-        public async Task<String> ProcessPagamento(int idPedido)
+        public async Task<String> RequestPagamentoQRCode(int idPedido)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
