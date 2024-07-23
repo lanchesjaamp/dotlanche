@@ -29,7 +29,7 @@ namespace DotLanches.Controllers
             return qrCode;
         }
 
-        public async Task<PagamentoViewModel?> ConfirmPagamento(int idPedido, bool isAccepted, int queueKey)
+        public async Task<PagamentoViewModel?> ProcessPagamento(int idPedido, bool isAccepted, int queueKey)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
