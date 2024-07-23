@@ -6,7 +6,7 @@ namespace DotLanches.Application.UseCases
 {
     public static class PagamentoUseCases
     {
-        public static async Task<string> ProcessPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway, ICheckout checkout)
+        public static async Task<string> RequestQrCodeForPedido(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway, ICheckout checkout)
         {
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
