@@ -49,7 +49,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(PagamentoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> PaymentResponseHandler([Required][FromBody] PagamentoResponseDto pagamentoResponse)
+        public async Task<IActionResult> ProcessPagamento([Required][FromBody] PagamentoResponseDto pagamentoResponse)
         {
             var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
             var queueKey = pagamentoResponse.PaymentStatus ? await _pedidoRepository.AssignKey(pagamentoResponse.IdPedido) : 0;
