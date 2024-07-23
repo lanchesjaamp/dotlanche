@@ -33,7 +33,7 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ExecutePayment([Required][FromBody] PagamentoRequestDto pagamentoRequest)
+        public async Task<IActionResult> RequestPagamentoQrCode([Required][FromBody] PagamentoRequestDto pagamentoRequest)
         {
             var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
             var qrCode = await adapterPagamento.ProcessPagamento(pagamentoRequest.IdPedido);
