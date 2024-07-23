@@ -17,7 +17,7 @@ namespace DotLanches.Application.UseCases
             await pagamentoGateway.Add(pagamento);
 
             //Fake Checkout for current version
-            var qrCode = checkout.ProcessPayment(pagamento);
+            var qrCode = checkout.RequestQrCode(pagamento);
 
             return qrCode;
         }

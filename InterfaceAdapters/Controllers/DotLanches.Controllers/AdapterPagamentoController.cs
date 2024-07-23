@@ -24,7 +24,7 @@ namespace DotLanches.Controllers
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
-            var qrCode = await PagamentoUseCases.ProcessPagamento(idPedido, pedidoGateway, pagamentoGateway, _checkout);
+            var qrCode = await PagamentoUseCases.RequestQrCodeForPedido(idPedido, pedidoGateway, pagamentoGateway, _checkout);
 
             return qrCode;
         }

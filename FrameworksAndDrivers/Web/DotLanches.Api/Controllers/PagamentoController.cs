@@ -36,7 +36,7 @@ namespace DotLanches.Api.Controllers
         public async Task<IActionResult> RequestPagamentoQrCode([Required][FromBody] PagamentoRequestDto pagamentoRequest)
         {
             var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
-            var qrCode = await adapterPagamento.ProcessPagamento(pagamentoRequest.IdPedido);
+            var qrCode = await adapterPagamento.RequestPagamentoQRCode(pagamentoRequest.IdPedido);
             return Ok(qrCode);
         }
 
@@ -49,11 +49,11 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(PagamentoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ProcessPagamento([Required][FromBody] PagamentoResponseDto pagamentoResponse)
+        public async Task<IActionResult> ProcessPagamento([Required][FromBody] ProcessPagamentoRequestDto pagamentoResponse)
         {
             var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
-            var queueKey = pagamentoResponse.PaymentStatus ? await _pedidoRepository.AssignKey(pagamentoResponse.IdPedido) : 0;
-            var payResponse = await adapterPagamento.ConfirmPagamento(pagamentoResponse.IdPedido, pagamentoResponse.PaymentStatus, queueKey);
+            var queueKey = pagamentoResponse.IsAccepted ? await _pedidoRepository.AssignKey(pagamentoResponse.IdPedido) : 0;
+            var payResponse = await adapterPagamento.ProcessPagamento(pagamentoResponse.IdPedido, pagamentoResponse.IsAccepted, queueKey);
             return Ok(payResponse);
         }
     }
