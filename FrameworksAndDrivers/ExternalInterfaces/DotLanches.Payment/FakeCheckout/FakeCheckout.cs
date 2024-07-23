@@ -5,7 +5,7 @@ namespace DotLanches.Payment.FakeCheckout
 {
     public class FakeCheckout : ICheckout
     {
-        public string ProcessPayment(Pagamento pagamento)
+        public string RequestQrCode(Pagamento pagamento)
         {
             //proccess time - 3s
             Thread.Sleep(3000);
