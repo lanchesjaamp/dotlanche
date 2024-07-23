@@ -1,6 +1,6 @@
 ﻿namespace DotLanches.Api.Dtos;
 
-public class PagamentoResponseDto
+public class ProcessPagamentoRequestDto
 {
     public int IdPedido { get; set; }
 
