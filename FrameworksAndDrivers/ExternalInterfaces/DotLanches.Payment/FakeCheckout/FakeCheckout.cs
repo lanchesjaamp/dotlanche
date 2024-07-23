@@ -5,9 +5,12 @@ namespace DotLanches.Payment.FakeCheckout
 {
     public class FakeCheckout : ICheckout
     {
-        public bool ProcessPayment(Pagamento pagamento)
+        public string RequestQrCode(Pagamento pagamento)
         {
-            return true;
+            //proccess time - 3s
+            Thread.Sleep(3000);
+            if (pagamento == null) return String.Empty;
+            return "DecodedQRCode";
         }
     }
 }

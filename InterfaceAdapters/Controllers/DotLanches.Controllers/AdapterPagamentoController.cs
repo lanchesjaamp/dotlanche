@@ -20,13 +20,31 @@ namespace DotLanches.Controllers
             _checkout = checkout;
         }
 
-        public async Task<PagamentoViewModel?> ProcessPagamento(int idPedido, int queueKey)
+        public async Task<String> RequestPagamentoQRCode(int idPedido)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
-            var payResponse = await PagamentoUseCases.ProcessPagamento(idPedido, pedidoGateway, pagamentoGateway, _checkout);
+            var qrCode = await PagamentoUseCases.RequestQrCodeForPedido(idPedido, pedidoGateway, pagamentoGateway, _checkout);
 
-            return PagamentoPresenter.GetPagamentoViewModel(payResponse, queueKey);
+            return qrCode;
+        }
+
+        public async Task<PagamentoViewModel?> ProcessPagamento(int idPedido, bool isAccepted, int queueKey)
+        {
+            var pedidoGateway = new PedidoGateway(_pedidoRepository);
+            var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
+
+            if (isAccepted)
+            {
+                var payResponse = await PagamentoUseCases.AcceptedPagamento(idPedido, pedidoGateway, pagamentoGateway);
+                return PagamentoPresenter.GetPagamentoViewModel(payResponse, queueKey);
+            }
+            else
+            {
+                var payResponse = await PagamentoUseCases.RefusedPagamento(idPedido, pedidoGateway, pagamentoGateway);
+                return PagamentoPresenter.GetPagamentoViewModel(payResponse);
+            }
+
         }
     }
 }

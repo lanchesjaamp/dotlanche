@@ -49,4 +49,9 @@ public class Pedido
         this.Status = Status.Recebido();
     }
 
+    public void Cancel()
+    {
+        this.Status = Status.Cancelado();
+    }
+
 }

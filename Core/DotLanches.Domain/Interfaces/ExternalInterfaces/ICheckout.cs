@@ -4,6 +4,6 @@ namespace DotLanches.Domain.Interfaces.ExternalInterfaces
 {
     public interface ICheckout
     {
-        bool ProcessPayment(Pagamento pagamento);
+        string RequestQrCode(Pagamento pagamento);
     }
 }

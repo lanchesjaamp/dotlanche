@@ -6,25 +6,58 @@ namespace DotLanches.Application.UseCases
 {
     public static class PagamentoUseCases
     {
-        public static async Task<Pagamento> ProcessPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway, ICheckout checkout)
+        public static async Task<string> RequestQrCodeForPedido(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway, ICheckout checkout)
         {
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
+
+            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
 
             var pagamento = new Pagamento(pedido.Id);
             await pagamentoGateway.Add(pagamento);
 
             //Fake Checkout for current version
-            var paymentSucceded = checkout.ProcessPayment(pagamento);
+            var qrCode = checkout.RequestQrCode(pagamento);
 
-            if (paymentSucceded)
-            {
-                pagamento.ConfirmPayment();
-                pedido.ReceivePagamento();
+            return qrCode;
+        }
 
-                await pedidoGateway.Update(pedido);
-                pagamento = await pagamentoGateway.Update(pagamento);
-            }
+        public static async Task<Pagamento> AcceptedPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway)
+        {
+            var pedido = await pedidoGateway.GetById(idPedido) ??
+                throw new Exception("Payment processing error: Non existing pedido!");
+
+            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
+
+            var pagamento = new Pagamento(pedido.Id);
+
+            await pagamentoGateway.Add(pagamento);
+
+            pagamento.ConfirmPayment();
+
+            pedido.ReceivePagamento();
+
+            await pedidoGateway.Update(pedido);
+
+            pagamento = await pagamentoGateway.Update(pagamento);
+
+            return pagamento;
+        }
+
+        public static async Task<Pagamento> RefusedPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway)
+        {
+            var pedido = await pedidoGateway.GetById(idPedido) ??
+                throw new Exception("Payment processing error: Non existing pedido!");
+
+            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
+
+            var pagamento = new Pagamento(pedido.Id);
+
+            await pagamentoGateway.Add(pagamento);
+
+            pagamento.RefusePayment();
+
+            pagamento = await pagamentoGateway.Update(pagamento);
 
             return pagamento;
         }
