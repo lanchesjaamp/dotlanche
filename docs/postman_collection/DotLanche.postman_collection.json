@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "8f519dfb-b552-46b2-99e9-753498531261",
 		"name": "DotLanche",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "4099276"
 	},
 	"item": [
@@ -14,15 +14,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{API_URL}}/Cliente",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Cliente"
-							]
-						}
+						"url": "{{API_URL}}/Cliente"
 					},
 					"response": []
 				},
@@ -40,15 +32,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{API_URL}}/Cliente",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Cliente"
-							]
-						}
+						"url": "{{API_URL}}/Cliente"
 					},
 					"response": []
 				},
@@ -66,16 +50,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{API_URL}}/Cliente/1",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Cliente",
-								"1"
-							]
-						}
+						"url": "{{API_URL}}/Cliente/1"
 					},
 					"response": []
 				},
@@ -84,16 +59,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{API_URL}}/Cliente/1",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Cliente",
-								"1"
-							]
-						}
+						"url": "{{API_URL}}/Cliente/1"
 					},
 					"response": []
 				},
@@ -102,16 +68,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{API_URL}}/Cliente/404.347.120-35",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Cliente",
-								"404.347.120-35"
-							]
-						}
+						"url": "{{API_URL}}/Cliente/404.347.120-35"
 					},
 					"response": []
 				}
@@ -121,7 +78,7 @@
 			"name": "Pagamento",
 			"item": [
 				{
-					"name": "Pagamento",
+					"name": "Pagamento by QR_CODE",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -134,15 +91,25 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{API_URL}}/Pagamento",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Pagamento"
-							]
-						}
+						"url": "{{API_URL}}/Pagamento/QrCode"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Pagamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"idPedido\": 1,\n  \"isAccepted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Pagamento/Confirmar"
 					},
 					"response": []
 				}
@@ -165,33 +132,16 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{API_URL}}/Pedido",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Pedido"
-							]
-						}
+						"url": "{{API_URL}}/Pedido"
 					},
 					"response": []
 				},
 				{
-					"name": "Recover oldest pedido",
+					"name": "Get Pedidos Queue",
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{API_URL}}/Pedido/queue",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Pedido",
-								"queue"
-							]
-						}
+						"url": "{{API_URL}}/Pedido/queue"
 					},
 					"response": []
 				}
@@ -214,15 +164,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{API_URL}}/Produto",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Produto"
-							]
-						}
+						"url": "{{API_URL}}/Produto"
 					},
 					"response": []
 				},
@@ -231,16 +173,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{API_URL}}/Produto/2",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Produto",
-								"2"
-							]
-						}
+						"url": "{{API_URL}}/Produto/1"
 					},
 					"response": []
 				},
@@ -258,16 +191,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{API_URL}}/Produto/2",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Produto",
-								"2"
-							]
-						}
+						"url": "{{API_URL}}/Produto/1"
 					},
 					"response": []
 				},
@@ -276,16 +200,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{API_URL}}/Produto/2",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"Produto",
-								"2"
-							]
-						}
+						"url": "{{API_URL}}/Produto/1"
 					},
 					"response": []
 				},
@@ -310,6 +225,29 @@
 								}
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Get All Categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Categoria"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categoria by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Categoria/1"
 					},
 					"response": []
 				}
