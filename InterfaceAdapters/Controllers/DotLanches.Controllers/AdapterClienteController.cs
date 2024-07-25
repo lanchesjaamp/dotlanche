@@ -14,17 +14,38 @@ namespace DotLanches.Controllers
             _clienteRepository = clienteRepository;
         }
 
-        public async Task Create(Cliente cliente)
+        public async Task AddCliente(Cliente cliente)
         {
             var clienteGateway = new ClienteGateway(_clienteRepository);
-            await ClienteUseCases.Add(cliente ,clienteGateway);
+            await ClienteUseCases.RegisterNewCliente(cliente ,clienteGateway);
             return;
+        }
+
+        public async Task<Cliente> EditCliente(Cliente cliente)
+        {
+            var clienteGateway = new ClienteGateway(_clienteRepository);
+            var cl = await ClienteUseCases.EditExistingCliente(cliente, clienteGateway);
+            return cl;
+        }
+
+        public async Task<Cliente> DeleteCliente(int idCliente)
+        {
+            var clienteGateway = new ClienteGateway(_clienteRepository);
+            var cl = await ClienteUseCases.RemoveCliente(idCliente, clienteGateway);
+            return cl;
+        }
+
+        public async Task<IEnumerable<Cliente>> GetAllClientes()
+        {
+            var clienteGateway = new ClienteGateway(_clienteRepository);
+            var clientes = await ClienteUseCases.ShowAllClientes(clienteGateway);
+            return clientes;
         }
 
         public async Task<Cliente?> GetByCpf(string cpf)
         {
             var clienteGateway = new ClienteGateway(_clienteRepository);
-            var cliente = await ClienteUseCases.GetByCpf(cpf, clienteGateway);
+            var cliente = await ClienteUseCases.ShowClienteByTheirCpf(cpf, clienteGateway);
             return cliente;
         }
     }

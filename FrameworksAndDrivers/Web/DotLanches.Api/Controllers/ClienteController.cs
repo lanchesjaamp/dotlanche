@@ -31,7 +31,7 @@ namespace DotLanches.Api.Controllers
         {
             var adapterController = new AdapterClienteController(_clienteRepository);
 
-            await adapterController.Create(clienteDto.ToDomainModel());
+            await adapterController.AddCliente(clienteDto.ToDomainModel());
 
             return StatusCode(StatusCodes.Status201Created);
         }
@@ -48,8 +48,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(int idCliente, [FromBody] ClienteDto clienteDto)
         {
-            var cliente = await _clienteRepository.Edit(clienteDto.ToDomainModel(idCliente));
-
+            var controller = new AdapterClienteController(_clienteRepository);
+            var cliente = await controller.EditCliente(clienteDto.ToDomainModel(idCliente));
             return Ok(cliente);
         }
         
@@ -63,8 +63,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] int idCliente)
         {
-            var cliente = await _clienteRepository.Delete(idCliente);
-
+            var controller = new AdapterClienteController(_clienteRepository);
+            var cliente = await controller.DeleteCliente(idCliente);
             return Ok(cliente);
         }
         
@@ -76,7 +76,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<Cliente>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var clienteList = await _clienteRepository.GetAll();
+            var controller = new AdapterClienteController(_clienteRepository);
+            var clienteList = await controller.GetAllClientes();
             return Ok(clienteList);
         }
 
@@ -92,9 +93,7 @@ namespace DotLanches.Api.Controllers
         public async Task<IActionResult> GetByCpf(string cpf)
         {
             var adapterController = new AdapterClienteController(_clienteRepository);
-
             var cliente = await adapterController.GetByCpf(cpf); 
-
             return Ok(cliente);
         }
     }

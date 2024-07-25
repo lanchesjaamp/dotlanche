@@ -7,7 +7,7 @@ namespace DotLanches.Application.UseCases
 {
     public static class ClienteUseCases
     {
-        public static async Task Add(Cliente cliente, IClienteGateway gateway)
+        public static async Task RegisterNewCliente(Cliente cliente, IClienteGateway gateway)
         {
             var clienteExists = await gateway.GetByCpf(cliente.Cpf.Number!);
 
@@ -17,7 +17,13 @@ namespace DotLanches.Application.UseCases
                 throw new ClienteAlreadyExistsException(cliente.Cpf.Number!);
         }
 
-        public static async Task<Cliente?> GetByCpf(string cpf, IClienteGateway gateway)
+        public static async Task<Cliente> EditExistingCliente(Cliente cliente, IClienteGateway gateway) => await gateway.Edit(cliente);
+
+        public static async Task<Cliente> RemoveCliente(int idCliente, IClienteGateway gateway) => await gateway.Delete(idCliente);
+
+        public static async Task<IEnumerable<Cliente>> ShowAllClientes(IClienteGateway gateway) => await gateway.GetAll();
+
+        public static async Task<Cliente?> ShowClienteByTheirCpf(string cpf, IClienteGateway gateway)
         {
             var cpfNumber = new Cpf(cpf);
 
