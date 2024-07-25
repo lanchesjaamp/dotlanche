@@ -98,5 +98,12 @@ namespace DotLanches.Infra.Repositories
             _dbContext.ChangeTracker.Clear();
             return pedido;
         }
+
+        public async Task<Pedido> UpdateStatus(Pedido pedido)
+        {
+            _dbContext.Update(pedido);
+            await _dbContext.SaveChangesAsync();
+            return pedido;
+        }
     }
 }

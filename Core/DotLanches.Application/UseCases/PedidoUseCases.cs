@@ -39,5 +39,17 @@ namespace DotLanches.Application.UseCases
             return pedidos;
         } 
 
+        public static async Task<Pedido> UpdateStatus(int id, Status status, IPedidoGateway pedidoGateway)
+        {
+            var pedido = await pedidoGateway.GetById(id) ??
+                throw new Exception("Non existing pedido!");
+
+            pedido.Status = status;
+
+            var updatedPedido = await pedidoGateway.UpdateStatus(pedido) ??
+                throw new Exception("Pedido not updated!");
+
+            return updatedPedido;
+        }
     }
 }
