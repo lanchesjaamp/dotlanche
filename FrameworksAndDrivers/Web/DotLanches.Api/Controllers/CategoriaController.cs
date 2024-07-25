@@ -1,4 +1,5 @@
-﻿using DotLanches.Domain.Entities;
+﻿using DotLanches.Controllers;
+using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,8 @@ public class CategoriaController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<Categoria>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var categorias = await _categoriaRepository.GetAll();
+        var controller = new AdapterCategoriaController(_categoriaRepository);
+        var categorias = await controller.GetAllCategorias();
         return Ok(categorias);
     }
 
@@ -37,7 +39,8 @@ public class CategoriaController : ControllerBase
     [ProducesResponseType(typeof(Categoria), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetById([Required][FromRoute] int idCategoria)
     {
-        var categoria = await _categoriaRepository.GetById(idCategoria);
+        var controller = new AdapterCategoriaController(_categoriaRepository);
+        var categoria = await controller.GetCategoriaById(idCategoria);
         if(categoria is null) return NoContent();
         return Ok(categoria);
     }
