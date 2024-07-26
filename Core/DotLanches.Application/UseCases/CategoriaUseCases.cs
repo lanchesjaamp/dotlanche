@@ -2,7 +2,7 @@
 using DotLanches.Domain.Exceptions;
 using DotLanches.Domain.Interfaces.Gateways;
 
-namespace DotLanches.UseCases.UseCases
+namespace DotLanches.Application.UseCases
 {
     public static class CategoriaUseCases
     {

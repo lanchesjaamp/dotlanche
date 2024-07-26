@@ -1,7 +1,7 @@
-﻿using DotLanches.Domain.Entities;
+﻿using DotLanches.Application.UseCases;
+using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Gateways;
-using DotLanches.UseCases.UseCases;
 
 namespace DotLanches.Controllers;
 
