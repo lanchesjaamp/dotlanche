@@ -112,6 +112,29 @@
 						"url": "{{API_URL}}/Pagamento/Confirmar"
 					},
 					"response": []
+				},
+				{
+					"name": "Get Status Pagamento By Pedido Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/Pagamento?idPedido=1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pagamento"
+							],
+							"query": [
+								{
+									"key": "idPedido",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
