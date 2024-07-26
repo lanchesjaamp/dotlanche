@@ -7,5 +7,7 @@ namespace DotLanches.Domain.Interfaces.Repositories
     Task Add(Pagamento pagamento);
 
     Task<Pagamento> Update(Pagamento pagamento);
+
+    Task<Pagamento> Get(int idPedido);
   }
 }
