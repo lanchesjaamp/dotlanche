@@ -144,6 +144,30 @@
 						"url": "{{API_URL}}/Pedido/queue"
 					},
 					"response": []
+				},
+				{
+					"name": "Update Pedido Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/Pedido/1?StatusId=2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pedido",
+								"1"
+							],
+							"query": [
+								{
+									"key": "StatusId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
