@@ -5,6 +5,7 @@ using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using DotLanches.Api.Dtos;
+using DotLanches.Domain.Entities;
 
 namespace DotLanches.Api.Controllers
 {
@@ -55,6 +56,18 @@ namespace DotLanches.Api.Controllers
             var queueKey = pagamentoResponse.IsAccepted ? await _pedidoRepository.AssignKey(pagamentoResponse.IdPedido) : 0;
             var payResponse = await adapterPagamento.ProcessPagamento(pagamentoResponse.IdPedido, pagamentoResponse.IsAccepted, queueKey);
             return Ok(payResponse);
+        }
+
+        /// <summary>
+        /// Busca o status do pagamento do pedido
+        /// </summary>
+        /// <returns>Status do pagamento</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(Pagamento), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetStatusPagamento(int idPedido)
+        {
+            return Ok(await _pagamentoRepository.Get(idPedido));
         }
     }
 }
