@@ -34,7 +34,7 @@ namespace DotLanches.Controllers
         public async Task<Pedido> UpdateStatus(int idPedido, Status status)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
-            var updatedPedido = await PedidoUseCases.UpdateStatus(idPedido, status, pedidoGateway);
+            var updatedPedido = await PedidoUseCases.UpdateStatusOfSelectedPedido(idPedido, status, pedidoGateway);
             return updatedPedido;
         }
     }
