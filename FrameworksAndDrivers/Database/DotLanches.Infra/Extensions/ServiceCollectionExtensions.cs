@@ -1,4 +1,5 @@
-﻿using DotLanches.Domain.Interfaces.Repositories;
+﻿using DotLanches.Database.Repositories;
+using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Infra.Data;
 using DotLanches.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace DotLanches.Infra.Extensions
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
             return services;
         }
