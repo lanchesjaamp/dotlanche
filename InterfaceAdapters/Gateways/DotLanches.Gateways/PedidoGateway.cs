@@ -22,5 +22,7 @@ namespace DotLanches.Gateways
         public async Task<Pedido?> GetById(int id) => await _pedidoRepository.GetById(id);
 
         public async Task<Pedido> Update(Pedido pedido) => await _pedidoRepository.Update(pedido);
+
+        public async Task<Pedido> UpdateStatus(Pedido pedido) => await _pedidoRepository.UpdateStatus(pedido);
     }
 }

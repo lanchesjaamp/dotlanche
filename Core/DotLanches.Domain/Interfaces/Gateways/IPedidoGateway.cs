@@ -13,5 +13,7 @@ namespace DotLanches.Domain.Interfaces.Gateways
         Task<IEnumerable<Pedido>> GetPedidosQueue();
 
         Task<Pedido?> GetById(int id);
+
+        Task<Pedido> UpdateStatus(Pedido pedido);
     }
 }
