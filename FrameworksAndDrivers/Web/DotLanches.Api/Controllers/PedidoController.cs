@@ -4,6 +4,7 @@ using DotLanches.Controllers;
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace DotLanches.Api.Controllers
 {
@@ -48,6 +49,23 @@ namespace DotLanches.Api.Controllers
             var pedidoList = await adapterPedido.GetPedidosQueue();
 
             return Ok(pedidoList);
+        }
+
+        /// <summary>
+        /// Atualiza o status de um pedido existente
+        /// </summary>
+        /// <param name="idPedido">ID do pedido a ser atualizado</param>
+        /// <param name="statusDto">ID do novo status do pedido</param>
+        /// <returns>Pedido atualizado</returns>
+        [HttpPut("{idPedido}")]
+        [ProducesResponseType(typeof(Pedido), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateStatus([FromRoute] int idPedido, [Required][FromQuery] StatusDto statusDto)
+        {
+            var adapterPedido = new AdapterPedidoController(_produtoRepository, _pedidoRepository);
+            var updatedPedido = await adapterPedido.UpdateStatus(idPedido, statusDto.ToDomainModel());
+            return Ok(updatedPedido);
         }
     }
 }
