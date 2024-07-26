@@ -1,6 +1,8 @@
 ﻿using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using DotLanches.Infra.Data;
+using DotLanches.Infra.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotLanches.Infra.Repositories
 {
@@ -25,6 +27,16 @@ namespace DotLanches.Infra.Repositories
             _dbContext.Pagamentos.Update(pagamento);
             await _dbContext.SaveChangesAsync();
             return pagamento;
+        }
+
+        public async Task<Pagamento> Get(int idPedido)
+        {
+            var pedido = await _dbContext.Pagamentos.FirstOrDefaultAsync(x => x.IdPedido == idPedido);
+
+            if (pedido is null)
+                throw new EntityNotFoundException();
+
+            return pedido;
         }
     }
 }
