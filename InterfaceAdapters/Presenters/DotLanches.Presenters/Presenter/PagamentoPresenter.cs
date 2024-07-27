@@ -1,16 +1,15 @@
 ﻿using DotLanches.Presenters.Dtos;
-using DotLanches.Domain.Entities;
 
 namespace DotLanches.Presenters.Mappers
 {
     public static class PagamentoPresenter
     {
-        public static PagamentoViewModel GetPagamentoViewModel(Pagamento pagamento, int queueKey = 0)
+        public static PagamentoViewModel GetPagamentoViewModel(bool? isAccepted, DateTime? registeredAt, int? queueKey = null)
         {
             var viewModel = new PagamentoViewModel()
             {
-                IsAccepted = pagamento.IsAccepted,
-                RegisteredAt = pagamento.RegisteredAt,
+                IsAccepted = isAccepted,
+                RegisteredAt = registeredAt,
                 QueueKey = queueKey
             };
 

@@ -44,9 +44,11 @@ public class Pedido
             throw new DomainValidationException(nameof(TotalPrice));
     }
 
-    public void ReceivePagamento()
+    public void ReceivePagamento(QueueKey queueKey)
     {
         this.Status = Status.Recebido();
+        this.QueueKey = queueKey.Value;
+        this.AddedToQueueAt = queueKey.CreationDate;
     }
 
     public void Cancel()

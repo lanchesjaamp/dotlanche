@@ -11,7 +11,7 @@ namespace DotLanches.Application.UseCases
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
 
-            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
+            if (pedido.Status.Id != Status.Confirmado().Id) throw new Exception("Payment processing error: Pedido not confirmed!");
 
             var pagamento = new Pagamento(pedido.Id);
             await pagamentoGateway.Add(pagamento);
@@ -22,26 +22,26 @@ namespace DotLanches.Application.UseCases
             return qrCode;
         }
 
-        public static async Task<Pagamento> AcceptedPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway)
+        public static async Task<QueueKey> AcceptedPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway)
         {
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
 
-            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
+            if (pedido.Status.Id != Status.Confirmado().Id)
+                throw new Exception("Payment processing error: Pedido not confirmed!");
 
-            var pagamento = new Pagamento(pedido.Id);
-
-            await pagamentoGateway.Add(pagamento);
-
+            var pagamento = await pagamentoGateway.GetByIdPedido(pedido.Id);
             pagamento.ConfirmPayment();
 
-            pedido.ReceivePagamento();
+            var lastQueueKey = await pedidoGateway.GetLastQueueKeyNumber(pedido.Id);
+            var newQueueKey = new QueueKey(lastQueueKey + 1, pagamento.RegisteredAt!.Value);
 
+            pedido.ReceivePagamento(newQueueKey);
+
+            await pagamentoGateway.Update(pagamento);
             await pedidoGateway.Update(pedido);
 
-            pagamento = await pagamentoGateway.Update(pagamento);
-
-            return pagamento;
+            return newQueueKey;
         }
 
         public static async Task<Pagamento> RefusedPagamento(int idPedido, IPedidoGateway pedidoGateway, IPagamentoGateway pagamentoGateway)
@@ -49,17 +49,19 @@ namespace DotLanches.Application.UseCases
             var pedido = await pedidoGateway.GetById(idPedido) ??
                 throw new Exception("Payment processing error: Non existing pedido!");
 
-            if (pedido.Status.Id != 1) throw new Exception("Payment processing error: Pedido not confirmed!");
+            if (pedido.Status.Id != Status.Confirmado().Id)
+                throw new Exception("Payment processing error: Pedido not confirmed!");
 
-            var pagamento = new Pagamento(pedido.Id);
-
-            await pagamentoGateway.Add(pagamento);
-
+            var pagamento = await pagamentoGateway.GetByIdPedido(pedido.Id);
             pagamento.RefusePayment();
 
             pagamento = await pagamentoGateway.Update(pagamento);
-
             return pagamento;
+        }
+
+        public static async Task<Pagamento> GetByIdPedido(int idPedido, IPagamentoGateway pagamentoGateway)
+        {
+            return await pagamentoGateway.GetByIdPedido(idPedido);
         }
     }
 }

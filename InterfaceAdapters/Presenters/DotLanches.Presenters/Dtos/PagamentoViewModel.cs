@@ -1,4 +1,7 @@
-﻿namespace DotLanches.Presenters.Dtos
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace DotLanches.Presenters.Dtos
 {
     public class PagamentoViewModel
     {
@@ -6,6 +9,7 @@
 
         public DateTime? RegisteredAt { get; set; }
 
-        public int QueueKey { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? QueueKey { get; set; }
     }
 }

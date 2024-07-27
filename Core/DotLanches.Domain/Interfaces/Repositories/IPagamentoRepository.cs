@@ -8,6 +8,6 @@ namespace DotLanches.Domain.Interfaces.Repositories
 
     Task<Pagamento> Update(Pagamento pagamento);
 
-    Task<Pagamento> Get(int idPedido);
+    Task<Pagamento> GetByIdPedido(int idPedido);
   }
 }

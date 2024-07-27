@@ -6,6 +6,8 @@ namespace DotLanches.Domain.Interfaces.Gateways
     {
         Task Add(Pagamento pagamento);
 
+        Task<Pagamento> GetByIdPedido(int idPedido);
+
         Task<Pagamento> Update(Pagamento pagamento);
     }
 }
