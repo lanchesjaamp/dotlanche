@@ -5,6 +5,7 @@ using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace DotLanches.Api.Controllers
 {
@@ -33,8 +34,9 @@ namespace DotLanches.Api.Controllers
         public async Task<IActionResult> Create([FromBody] PedidoDto pedidoDto)
         {
             var adapterPedido = new AdapterPedidoController(_produtoRepository, _pedidoRepository);
-            await adapterPedido.Create(pedidoDto.ToDomainModel());
-            return StatusCode(StatusCodes.Status201Created);
+            var pedidoId = await adapterPedido.Create(pedidoDto.ToDomainModel());
+
+            return new CreatedResult(string.Empty, new {pedidoId});
         }
 
         /// <summary>

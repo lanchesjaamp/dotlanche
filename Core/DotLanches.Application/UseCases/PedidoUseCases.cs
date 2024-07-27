@@ -1,4 +1,5 @@
 #pragma warning disable CS8602 // Desreferência de uma referência possivelmente nula.
+
 using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.Gateways;
 
@@ -6,7 +7,7 @@ namespace DotLanches.Application.UseCases
 {
     public static class PedidoUseCases
     {
-        public static async Task Add(Pedido pedido, IProdutoGateway produtoGateway, IPedidoGateway pedidoGateway)
+        public static async Task<Pedido> Create(Pedido pedido, IProdutoGateway produtoGateway, IPedidoGateway pedidoGateway)
         {
             foreach (var combo in pedido.Combos)
             {
@@ -21,6 +22,7 @@ namespace DotLanches.Application.UseCases
             pedido.CalculateTotalPrice();
 
             await pedidoGateway.Add(pedido);
+            return pedido;
         }
 
         public static async Task<IEnumerable<Pedido>> GetPedidosQueue(IPedidoGateway pedidoGateway)
@@ -37,7 +39,7 @@ namespace DotLanches.Application.UseCases
             }
 
             return pedidos;
-        } 
+        }
 
         public static async Task<Pedido> UpdateStatusOfSelectedPedido(int id, Status status, IPedidoGateway pedidoGateway)
         {
