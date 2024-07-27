@@ -8,7 +8,7 @@ namespace DotLanches.Domain.Interfaces.Repositories
 
         Task<Pedido> Update(Pedido pedido);
 
-        Task<int> GetLastQueueKeyNumber(int idPedido);
+        Task<int> GetLastQueueKeyNumber();
 
         Task<IEnumerable<Pedido>> GetPedidosQueue();
 
