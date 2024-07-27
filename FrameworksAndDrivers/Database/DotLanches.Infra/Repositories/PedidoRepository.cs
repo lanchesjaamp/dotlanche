@@ -65,13 +65,13 @@ namespace DotLanches.Infra.Repositories
             return pedidos;
         }
 
-        public async Task<int> AssignKey(int idPedido)
+        public async Task<int> GetLastQueueKeyNumber(int idPedido)
         {
             var entity = _dbContext.Pedidos.Find(idPedido) ?? throw new EntityNotFoundException();
-            var maxActiveOrderKey = await _dbContext.Pedidos.Where(p => p.Status.Id != 4).MaxAsync(p => (int?)p.QueueKey) ?? 0;
-            entity.QueueKey = maxActiveOrderKey + 1;
-            entity.AddedToQueueAt = DateTime.UtcNow;
-            await _dbContext.SaveChangesAsync();
+            var maxActiveOrderKey = await _dbContext.Pedidos
+                .Where(p => p.Status.Id != Status.Confirmado().Id)
+                .MaxAsync(p => (int?)p.QueueKey) ?? 0;
+
             return entity.QueueKey;
         }
 

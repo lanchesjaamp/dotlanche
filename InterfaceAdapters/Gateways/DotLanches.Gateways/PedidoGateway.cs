@@ -15,7 +15,7 @@ namespace DotLanches.Gateways
 
         public async Task Add(Pedido pedido) => await _pedidoRepository.Add(pedido);
 
-        public async Task<int> AssignKey(int idPedido) => await _pedidoRepository.AssignKey(idPedido);
+        public async Task<int> GetLastQueueKeyNumber(int idPedido) => await _pedidoRepository.GetLastQueueKeyNumber(idPedido);
 
         public async Task<IEnumerable<Pedido>> GetPedidosQueue() => await _pedidoRepository.GetPedidosQueue();
 

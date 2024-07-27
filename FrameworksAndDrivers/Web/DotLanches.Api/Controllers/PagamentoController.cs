@@ -1,11 +1,11 @@
-﻿using DotLanches.Presenters.Dtos;
+﻿using DotLanches.Api.Dtos;
 using DotLanches.Controllers;
+using DotLanches.Domain.Entities;
 using DotLanches.Domain.Interfaces.ExternalInterfaces;
 using DotLanches.Domain.Interfaces.Repositories;
+using DotLanches.Presenters.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using DotLanches.Api.Dtos;
-using DotLanches.Domain.Entities;
 
 namespace DotLanches.Api.Controllers
 {
@@ -53,8 +53,7 @@ namespace DotLanches.Api.Controllers
         public async Task<IActionResult> ProcessPagamento([Required][FromBody] ProcessPagamentoRequestDto pagamentoResponse)
         {
             var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
-            var queueKey = pagamentoResponse.IsAccepted ? await _pedidoRepository.AssignKey(pagamentoResponse.IdPedido) : 0;
-            var payResponse = await adapterPagamento.ProcessPagamento(pagamentoResponse.IdPedido, pagamentoResponse.IsAccepted, queueKey);
+            var payResponse = await adapterPagamento.ProcessPagamento(pagamentoResponse.IdPedido, pagamentoResponse.IsAccepted);
             return Ok(payResponse);
         }
 

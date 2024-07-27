@@ -20,7 +20,7 @@ namespace DotLanches.Controllers
             _checkout = checkout;
         }
 
-        public async Task<String> RequestPagamentoQRCode(int idPedido)
+        public async Task<string> RequestPagamentoQRCode(int idPedido)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
@@ -29,21 +29,22 @@ namespace DotLanches.Controllers
             return qrCode;
         }
 
-        public async Task<PagamentoViewModel?> ProcessPagamento(int idPedido, bool isAccepted, int queueKey)
+        public async Task<PagamentoViewModel?> ProcessPagamento(int idPedido, bool isAccepted)
         {
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
             var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
 
             if (isAccepted)
             {
-                var payResponse = await PagamentoUseCases.AcceptedPagamento(idPedido, pedidoGateway, pagamentoGateway);
-                return PagamentoPresenter.GetPagamentoViewModel(payResponse, queueKey);
+                var queueKey = await PagamentoUseCases.AcceptedPagamento(idPedido, pedidoGateway, pagamentoGateway);
+                return PagamentoPresenter.GetPagamentoViewModel(isAccepted: true, queueKey.CreationDate, queueKey.Value);
             }
             else
             {
-                var payResponse = await PagamentoUseCases.RefusedPagamento(idPedido, pedidoGateway, pagamentoGateway);
-                return PagamentoPresenter.GetPagamentoViewModel(payResponse);
+                await PagamentoUseCases.RefusedPagamento(idPedido, pedidoGateway, pagamentoGateway);
+                return PagamentoPresenter.GetPagamentoViewModel(isAccepted: false, DateTime.Now);
             }
+        }
 
         public async Task<PagamentoViewModel?> GetByIdPedido(int idPedido)
         {
