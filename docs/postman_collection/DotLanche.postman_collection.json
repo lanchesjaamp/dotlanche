@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "8f519dfb-b552-46b2-99e9-753498531261",
+		"name": "DotLanche",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4099276"
+	},
+	"item": [
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Get  All Clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Cliente"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"user example\", // Must be in string\n  \"cpf\": \"404.347.120-35\", // Must be in string and valid CPF\n  \"email\": \"user@example.com\" // Must be in string and valid e-mail\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Cliente"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cliente by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"user example 2\", // Must be in string\n  \"cpf\": \"404.347.120-35\", // Must be in string and valid CPF\n  \"email\": \"user@example.com\" // Must be in string and valid e-mail\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Cliente/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cliente by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{API_URL}}/Cliente/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Cliente by CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Cliente/404.347.120-35"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Pagamento by QR_CODE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idPedido\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Pagamento/QrCode"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Pagamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"idPedido\": 1,\n  \"isAccepted\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Pagamento/Confirmar"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Status Pagamento By Pedido Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/Pagamento?idPedido=1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pagamento"
+							],
+							"query": [
+								{
+									"key": "idPedido",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Create a Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clienteCpf\": {\n    \"number\": \"404.347.120-35\"\n  },\n  \"combos\": [\n    {\n      \"lancheId\": 1,\n      \"acompanhamentoId\": 3,\n      \"bebidaId\": 4,\n      \"sobremesaId\": 5\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Pedido"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pedidos Queue",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Pedido/queue"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pedido Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/Pedido/1?StatusId=2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Pedido",
+								"1"
+							],
+							"query": [
+								{
+									"key": "StatusId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Create Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Batata Frita\", // Must be a string\n  \"categoriaId\": 1, // Must be a number\n  \"description\": \"Batata deliciosamente frita\", // Must be a string\n  \"price\": 3.45 // Must be a number\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Produto"
+					},
+					"response": []
+				},
+				{
+					"name": "Recover a Produto by Produto Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Produto/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Produto By Produto ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Batata Frita\", // Must be a string\n  \"categoriaId\": 1, // Must be a number\n  \"description\": \"Batata deliciosamente frita\", // Must be a string\n  \"price\": 4.45 // Must be a number\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{API_URL}}/Produto/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Produto by Produto ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{API_URL}}/Produto/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Produtos by Categoria ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/Produto/?idCategoria=1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"Produto",
+								""
+							],
+							"query": [
+								{
+									"key": "idCategoria",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Get All Categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Categoria"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categoria by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{API_URL}}/Categoria/1"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
