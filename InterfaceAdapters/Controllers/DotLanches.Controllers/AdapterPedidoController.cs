@@ -16,12 +16,13 @@ namespace DotLanches.Controllers
             _pedidoRepository = pedidoRepository;
         }
 
-        public async Task Create(Pedido pedido)
+        public async Task<int> Create(Pedido pedido)
         {
             var produtoGateway = new ProdutoGateway(_produtoRepository);
             var pedidoGateway = new PedidoGateway(_pedidoRepository);
-            await PedidoUseCases.Add(pedido, produtoGateway, pedidoGateway);
-            return;
+            var newPedido = await PedidoUseCases.Create(pedido, produtoGateway, pedidoGateway);
+
+            return newPedido.Id;
         }
 
         public async Task<IEnumerable<Pedido>> GetPedidosQueue()

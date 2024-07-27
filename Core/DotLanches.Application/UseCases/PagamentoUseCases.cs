@@ -33,7 +33,7 @@ namespace DotLanches.Application.UseCases
             var pagamento = await pagamentoGateway.GetByIdPedido(pedido.Id);
             pagamento.ConfirmPayment();
 
-            var lastQueueKey = await pedidoGateway.GetLastQueueKeyNumber(pedido.Id);
+            var lastQueueKey = await pedidoGateway.GetLastQueueKeyNumber();
             var newQueueKey = new QueueKey(lastQueueKey + 1, pagamento.RegisteredAt!.Value);
 
             pedido.ReceivePagamento(newQueueKey);
