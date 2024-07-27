@@ -45,6 +45,12 @@ namespace DotLanches.Controllers
                 return PagamentoPresenter.GetPagamentoViewModel(payResponse);
             }
 
+        public async Task<PagamentoViewModel?> GetByIdPedido(int idPedido)
+        {
+            var pagamentoGateway = new PagamentoGateway(_pagamentoRepository);
+            var pagamento = await pagamentoGateway.GetByIdPedido(idPedido);
+
+            return PagamentoPresenter.GetPagamentoViewModel(pagamento.IsAccepted, pagamento.RegisteredAt);
         }
     }
 }

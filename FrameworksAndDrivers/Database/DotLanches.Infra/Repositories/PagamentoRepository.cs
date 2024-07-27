@@ -29,7 +29,7 @@ namespace DotLanches.Infra.Repositories
             return pagamento;
         }
 
-        public async Task<Pagamento> Get(int idPedido)
+        public async Task<Pagamento> GetByIdPedido(int idPedido)
         {
             var pedido = await _dbContext.Pagamentos.FirstOrDefaultAsync(x => x.IdPedido == idPedido);
 

@@ -59,7 +59,9 @@ namespace DotLanches.Application.UseCases
 
             pagamento = await pagamentoGateway.Update(pagamento);
 
-            return pagamento;
+        public static async Task<Pagamento> GetByIdPedido(int idPedido, IPagamentoGateway pagamentoGateway)
+        {
+            return await pagamentoGateway.GetByIdPedido(idPedido);
         }
     }
 }

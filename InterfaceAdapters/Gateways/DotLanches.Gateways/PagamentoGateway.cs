@@ -15,6 +15,8 @@ namespace DotLanches.Gateways
 
         public async Task Add(Pagamento pagamento) => await _pagamentoRepository.Add(pagamento);
 
+        public async Task<Pagamento> GetByIdPedido(int idPedido) => await _pagamentoRepository.GetByIdPedido(idPedido);
+
         public async Task<Pagamento> Update(Pagamento pagamento) => await _pagamentoRepository.Update(pagamento);
     }
 }

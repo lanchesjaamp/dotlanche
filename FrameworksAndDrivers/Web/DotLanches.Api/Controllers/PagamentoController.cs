@@ -67,7 +67,8 @@ namespace DotLanches.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetStatusPagamento(int idPedido)
         {
-            return Ok(await _pagamentoRepository.Get(idPedido));
+            var adapterPagamento = new AdapterPagamentoController(_pagamentoRepository, _pedidoRepository, _checkout);
+            return Ok(await adapterPagamento.GetByIdPedido(idPedido));
         }
     }
 }
