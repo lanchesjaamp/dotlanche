@@ -59,7 +59,7 @@ O DotLanche é uma aplicação para gerenciamento de clientes e pedidos em um si
 1. Executar uma requisição `POST` para o endpoint `{{API_URL}}/Pagamento/QrCode` para criar 1 pagamento via QR Code
    - Necessário informar o id do pedido do item anterior
 2. Executar uma requisição `POST` para o endpoint `{{API_URL}}/Pagamento/Confirmar` para confirmar o pagamento
-   - Necessário informar o id do pagamento do item anterior
+   - Necessário informar o id do pedido do item anterior
    - Necessário adicionar a flag como `isAccepted` como `true`
 3. Executar uma requisição `GET` para o endpoint `{{API_URL}}/Pagamento?idPedido={{idPedido}}` para consultar o status do pedido
 
