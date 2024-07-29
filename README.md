@@ -79,3 +79,6 @@ O DotLanche é uma aplicação para gerenciamento de clientes e pedidos em um si
 
 ### Pode se verificar todos os enpoints importando o [collection](https://github.com/lanchesjaamp/dotlanche/blob/main/docs/postman_collection/DotLanche.postman_collection.json) e o [environment](https://github.com/lanchesjaamp/dotlanche/blob/main/docs/postman_collection/dotlanche.postman_environment.json) no postman
 ### Todos os endpoints, _exceto a categoria e o pagamento_, são do tipo CRUD, ou seja, possuem métodos de `UPDATE` e `DELETE` das entidades, podendo ser verificado no [collection](https://github.com/lanchesjaamp/dotlanche/blob/main/docs/postman_collection/DotLanche.postman_collection.json)
+
+## Video de explicação do projeto
+[![video do projeto](docs/imgs/video_thumbnail.png)](https://youtu.be/PfyiMBKDJ1Y)
